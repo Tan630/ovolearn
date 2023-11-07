@@ -1,0 +1,67 @@
+\doxysection{core.\+selector.\+Elitis\+Selector\+Decorator Class Reference}
+\hypertarget{classcore_1_1selector_1_1_elitis_selector_decorator}{}\label{classcore_1_1selector_1_1_elitis_selector_decorator}\index{core.selector.ElitisSelectorDecorator@{core.selector.ElitisSelectorDecorator}}
+Inheritance diagram for core.\+selector.\+Elitis\+Selector\+Decorator\+:\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[height=2.445415cm]{classcore_1_1selector_1_1_elitis_selector_decorator}
+\end{center}
+\end{figure}
+\doxysubsubsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+T \mbox{\hyperlink{classcore_1_1selector_1_1_elitis_selector_decorator_a6709b0fe749cae8f1eaa5b3c9f6801ff}{select}} (self, \texorpdfstring{$\ast$}{*}args)
+\begin{DoxyCompactList}\small\item\em Repeatedly apply select to create a collection of solutions. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\doxysubsection*{Public Member Functions inherited from \mbox{\hyperlink{classcore_1_1selector_1_1_selector_decorator}{core.\+selector.\+Selector\+Decorator}}}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\hyperlink{classcore_1_1selector_1_1_selector_decorator_a36dea5bb9b8eb0a74f54a8706ca0c869}{\+\_\+\+\_\+init\+\_\+\+\_\+}} (typing.\+Self self, \mbox{\hyperlink{classcore_1_1selector_1_1_selector}{Selector}}\mbox{[}T\mbox{]} selector)
+\item 
+\mbox{\hyperlink{classcore_1_1population_1_1_genome_pool}{Genome\+Pool}}\mbox{[}T\mbox{]} \mbox{\hyperlink{classcore_1_1selector_1_1_selector_decorator_a251fa5c3ba08dd4443b76f7f6924a09f}{select\+\_\+to\+\_\+pool}} (self, \texorpdfstring{$\ast$}{*}args)
+\item 
+\mbox{\hyperlink{classcore_1_1population_1_1_population}{Population}}\mbox{[}T\mbox{]} \mbox{\hyperlink{classcore_1_1selector_1_1_selector_decorator_a09adb24ce216d04a0cb0de5104130300}{select\+\_\+to\+\_\+population}} (self, \texorpdfstring{$\ast$}{*}args)
+\end{DoxyCompactItemize}
+\doxysubsection*{Public Member Functions inherited from \mbox{\hyperlink{classcore_1_1selector_1_1_selector}{core.\+selector.\+Selector}}}
+\begin{DoxyCompactItemize}
+\item 
+Iterable\mbox{[}T\mbox{]} \mbox{\hyperlink{classcore_1_1selector_1_1_selector_af55cf8661a9b40936a1bf31190e6260b}{select\+\_\+to\+\_\+many}} (self, \mbox{\hyperlink{classcore_1_1population_1_1_population}{Population}}\mbox{[}T\mbox{]} population, \mbox{\hyperlink{classcore_1_1evaluator_1_1_evaluator}{Evaluator}}\mbox{[}T\mbox{]} evaluator, Optional\mbox{[}int\mbox{]} budget=None)
+\begin{DoxyCompactList}\small\item\em Many-\/to-\/many selection strategy. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\doxysubsubsection*{Additional Inherited Members}
+\doxysubsection*{Public Attributes inherited from \mbox{\hyperlink{classcore_1_1selector_1_1_selector_decorator}{core.\+selector.\+Selector\+Decorator}}}
+\begin{DoxyCompactItemize}
+\item 
+{\bfseries selector}
+\end{DoxyCompactItemize}
+\doxysubsection*{Public Attributes inherited from \mbox{\hyperlink{classcore_1_1selector_1_1_selector}{core.\+selector.\+Selector}}}
+\begin{DoxyCompactItemize}
+\item 
+{\bfseries arity}
+\item 
+{\bfseries coarity}
+\item 
+{\bfseries budget}
+\end{DoxyCompactItemize}
+
+
+\doxysubsection{Member Function Documentation}
+\Hypertarget{classcore_1_1selector_1_1_elitis_selector_decorator_a6709b0fe749cae8f1eaa5b3c9f6801ff}\label{classcore_1_1selector_1_1_elitis_selector_decorator_a6709b0fe749cae8f1eaa5b3c9f6801ff} 
+\index{core.selector.ElitisSelectorDecorator@{core.selector.ElitisSelectorDecorator}!select@{select}}
+\index{select@{select}!core.selector.ElitisSelectorDecorator@{core.selector.ElitisSelectorDecorator}}
+\doxysubsubsection{\texorpdfstring{select()}{select()}}
+{\footnotesize\ttfamily  T core.\+selector.\+Elitis\+Selector\+Decorator.\+select (\begin{DoxyParamCaption}\item[{}]{self,  }\item[{\texorpdfstring{$\ast$}{*}}]{parents }\end{DoxyParamCaption})}
+
+
+
+Repeatedly apply select to create a collection of solutions. 
+
+Destory the input population. \begin{DoxyParagraph}{Side Effects\+:}
+Destroy the input population 
+\end{DoxyParagraph}
+
+
+Reimplemented from \mbox{\hyperlink{classcore_1_1selector_1_1_selector_decorator_a4ec5ce7902992d84e2fc0c2544b33b45}{core.\+selector.\+Selector\+Decorator}}.
+
+
+
+The documentation for this class was generated from the following file\+:\begin{DoxyCompactItemize}
+\item 
+src/core/selector.\+py\end{DoxyCompactItemize}

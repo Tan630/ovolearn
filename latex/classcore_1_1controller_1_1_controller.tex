@@ -1,0 +1,114 @@
+\doxysection{core.\+controller.\+Controller Class Reference}
+\hypertarget{classcore_1_1controller_1_1_controller}{}\label{classcore_1_1controller_1_1_controller}\index{core.controller.Controller@{core.controller.Controller}}
+Inheritance diagram for core.\+controller.\+Controller\+:\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[height=2.000000cm]{classcore_1_1controller_1_1_controller}
+\end{center}
+\end{figure}
+\doxysubsubsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+None \mbox{\hyperlink{classcore_1_1controller_1_1_controller_a2295271410adaf47d3a4828c3324ac31}{\+\_\+\+\_\+init\+\_\+\+\_\+}} (self, \mbox{\hyperlink{classcore_1_1population_1_1_population}{Population}}\mbox{[}T\mbox{]} population, \mbox{\hyperlink{classcore_1_1evaluator_1_1_evaluator}{Evaluator}}\mbox{[}T\mbox{]} evaluator, \mbox{\hyperlink{classcore_1_1selector_1_1_selector}{Selector}}\mbox{[}T\mbox{]} parent\+\_\+selector, \mbox{\hyperlink{classcore_1_1variator_1_1_variator}{Variator}}\mbox{[}T\mbox{]} variator, \mbox{\hyperlink{classcore_1_1selector_1_1_selector}{Selector}}\mbox{[}T\mbox{]} survivor\+\_\+selector)
+\begin{DoxyCompactList}\small\item\em Initialize an evolution controller with a set of configurable components. \end{DoxyCompactList}\item 
+Self \mbox{\hyperlink{classcore_1_1controller_1_1_controller_a6ce17cf823c16efbb450233c4e8f5a08}{step}} (self, Optional\mbox{[}Callable\mbox{[}\mbox{[}Self\mbox{]}, None\mbox{]}\mbox{]} accountant=None)
+\begin{DoxyCompactList}\small\item\em Improve the population by one generation. \end{DoxyCompactList}\item 
+\Hypertarget{classcore_1_1controller_1_1_controller_a05fc523fac476a0b500d592cf2c7572b}\label{classcore_1_1controller_1_1_controller_a05fc523fac476a0b500d592cf2c7572b} 
+{\bfseries varity\+\_\+check} (self)
+\item 
+\Hypertarget{classcore_1_1controller_1_1_controller_a3cb21b59bf2f7c43ef968f371ca7da1d}\label{classcore_1_1controller_1_1_controller_a3cb21b59bf2f7c43ef968f371ca7da1d} 
+bool {\bfseries done} (self)
+\begin{DoxyCompactList}\small\item\em @\+TODO This behaviour is not implemented. \end{DoxyCompactList}\item 
+\Hypertarget{classcore_1_1controller_1_1_controller_aea2c728f66755ebf4372b476523debcc}\label{classcore_1_1controller_1_1_controller_aea2c728f66755ebf4372b476523debcc} 
+int {\bfseries max\+\_\+steps} (self)
+\item 
+\Hypertarget{classcore_1_1controller_1_1_controller_a03947c8599697a1583d9d8aff331b87b}\label{classcore_1_1controller_1_1_controller_a03947c8599697a1583d9d8aff331b87b} 
+None {\bfseries max\+\_\+steps} (self, int val)
+\end{DoxyCompactItemize}
+\doxysubsubsection*{Public Attributes}
+\begin{DoxyCompactItemize}
+\item 
+\Hypertarget{classcore_1_1controller_1_1_controller_a452f336ed24883c64359640c8a2c3657}\label{classcore_1_1controller_1_1_controller_a452f336ed24883c64359640c8a2c3657} 
+{\bfseries population}
+\item 
+\Hypertarget{classcore_1_1controller_1_1_controller_ae2b9a10f84284aa504f138f4951167e2}\label{classcore_1_1controller_1_1_controller_ae2b9a10f84284aa504f138f4951167e2} 
+{\bfseries evaluator}
+\item 
+\Hypertarget{classcore_1_1controller_1_1_controller_a8355d59d2c7bd24607250ba9e494b311}\label{classcore_1_1controller_1_1_controller_a8355d59d2c7bd24607250ba9e494b311} 
+{\bfseries parent\+\_\+selector}
+\item 
+\Hypertarget{classcore_1_1controller_1_1_controller_acb142888955a79105265255540f265ec}\label{classcore_1_1controller_1_1_controller_acb142888955a79105265255540f265ec} 
+{\bfseries variator}
+\item 
+\Hypertarget{classcore_1_1controller_1_1_controller_ad302821b811b4ae035f67b0c003c2285}\label{classcore_1_1controller_1_1_controller_ad302821b811b4ae035f67b0c003c2285} 
+{\bfseries survivor\+\_\+selector}
+\item 
+\Hypertarget{classcore_1_1controller_1_1_controller_a0a0fa356bd63ab98d4623c40a856cb48}\label{classcore_1_1controller_1_1_controller_a0a0fa356bd63ab98d4623c40a856cb48} 
+{\bfseries is\+\_\+done}
+\item 
+\Hypertarget{classcore_1_1controller_1_1_controller_a4d392553c1b0d442b0f530d06b032bce}\label{classcore_1_1controller_1_1_controller_a4d392553c1b0d442b0f530d06b032bce} 
+{\bfseries generation}
+\end{DoxyCompactItemize}
+\doxysubsubsection*{Protected Attributes}
+\begin{DoxyCompactItemize}
+\item 
+\Hypertarget{classcore_1_1controller_1_1_controller_a015163051713448884cea34980f02f1c}\label{classcore_1_1controller_1_1_controller_a015163051713448884cea34980f02f1c} 
+{\bfseries \+\_\+max\+\_\+steps}
+\end{DoxyCompactItemize}
+
+
+\doxysubsection{Detailed Description}
+\begin{DoxyVerb}Encapsulated environment where evolutionary learning takes place.
+\end{DoxyVerb}
+ 
+
+\doxysubsection{Constructor \& Destructor Documentation}
+\Hypertarget{classcore_1_1controller_1_1_controller_a2295271410adaf47d3a4828c3324ac31}\label{classcore_1_1controller_1_1_controller_a2295271410adaf47d3a4828c3324ac31} 
+\index{core.controller.Controller@{core.controller.Controller}!\_\_init\_\_@{\_\_init\_\_}}
+\index{\_\_init\_\_@{\_\_init\_\_}!core.controller.Controller@{core.controller.Controller}}
+\doxysubsubsection{\texorpdfstring{\_\_init\_\_()}{\_\_init\_\_()}}
+{\footnotesize\ttfamily  None core.\+controller.\+Controller.\+\_\+\+\_\+init\+\_\+\+\_\+ (\begin{DoxyParamCaption}\item[{}]{self,  }\item[{\mbox{\hyperlink{classcore_1_1population_1_1_population}{Population}}\mbox{[}T\mbox{]}}]{population,  }\item[{\mbox{\hyperlink{classcore_1_1evaluator_1_1_evaluator}{Evaluator}}\mbox{[}T\mbox{]}}]{evaluator,  }\item[{\mbox{\hyperlink{classcore_1_1selector_1_1_selector}{Selector}}\mbox{[}T\mbox{]}}]{parent\+\_\+selector,  }\item[{\mbox{\hyperlink{classcore_1_1variator_1_1_variator}{Variator}}\mbox{[}T\mbox{]}}]{variator,  }\item[{\mbox{\hyperlink{classcore_1_1selector_1_1_selector}{Selector}}\mbox{[}T\mbox{]}}]{survivor\+\_\+selector }\end{DoxyParamCaption})}
+
+
+
+Initialize an evolution controller with a set of configurable components. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em population} & the initial population \\
+\hline
+{\em evaluator} & The evaluator acts on an individual to determine its fitness. \\
+\hline
+{\em parent\+\_\+selector} & The parent selector applies to the population before variation. The range of the parent selector must match the domain of the variator. \\
+\hline
+{\em variator} & The variator receives a collection of elements and outputs a list of genomes. These genomes are deposited into the population. \\
+\hline
+{\em survivor\+\_\+selector} & The parent selector that is applied before variation. \\
+\hline
+\end{DoxyParams}
+
+
+\doxysubsection{Member Function Documentation}
+\Hypertarget{classcore_1_1controller_1_1_controller_a6ce17cf823c16efbb450233c4e8f5a08}\label{classcore_1_1controller_1_1_controller_a6ce17cf823c16efbb450233c4e8f5a08} 
+\index{core.controller.Controller@{core.controller.Controller}!step@{step}}
+\index{step@{step}!core.controller.Controller@{core.controller.Controller}}
+\doxysubsubsection{\texorpdfstring{step()}{step()}}
+{\footnotesize\ttfamily  Self core.\+controller.\+Controller.\+step (\begin{DoxyParamCaption}\item[{}]{self,  }\item[{Optional\mbox{[}Callable\mbox{[}\mbox{[}Self\mbox{]}, None\mbox{]}\mbox{]}}]{accountant = {\ttfamily None} }\end{DoxyParamCaption})}
+
+
+
+Improve the population by one generation. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em accountant} & act on the population after the survivor selector \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+\+: the population that results from the step 
+\end{DoxyReturn}
+
+
+The documentation for this class was generated from the following file\+:\begin{DoxyCompactItemize}
+\item 
+src/core/controller.\+py\end{DoxyCompactItemize}

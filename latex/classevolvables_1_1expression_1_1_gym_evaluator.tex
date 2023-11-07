@@ -1,0 +1,105 @@
+\doxysection{evolvables.\+expression.\+Gym\+Evaluator Class Reference}
+\hypertarget{classevolvables_1_1expression_1_1_gym_evaluator}{}\label{classevolvables_1_1expression_1_1_gym_evaluator}\index{evolvables.expression.GymEvaluator@{evolvables.expression.GymEvaluator}}
+Inheritance diagram for evolvables.\+expression.\+Gym\+Evaluator\+:\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[height=1.630277cm]{classevolvables_1_1expression_1_1_gym_evaluator}
+\end{center}
+\end{figure}
+\doxysubsubsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\hyperlink{classevolvables_1_1expression_1_1_gym_evaluator_a0fdc78bd5b112f9e50367c927af596b2}{\+\_\+\+\_\+init\+\_\+\+\_\+}} (self, env, Callable\mbox{[}\mbox{[}float\mbox{]}, float\mbox{]} wrapper, int step\+\_\+count, Callable\mbox{[}\mbox{[}float\mbox{]}, float\mbox{]} score\+\_\+wrapper=lambda x \+:x)
+\item 
+float \mbox{\hyperlink{classevolvables_1_1expression_1_1_gym_evaluator_acaace84ef59de74bd87186f57719048e}{evaluate}} (self, \mbox{\hyperlink{classevolvables_1_1expression_1_1_program}{Program}}\mbox{[}float\mbox{]} s1)
+\end{DoxyCompactItemize}
+\doxysubsection*{Public Member Functions inherited from \mbox{\hyperlink{classcore_1_1evaluator_1_1_evaluator}{core.\+evaluator.\+Evaluator}}}
+\begin{DoxyCompactItemize}
+\item 
+float \mbox{\hyperlink{classcore_1_1evaluator_1_1_evaluator_af83cf211c2b4fb70cdedb2fb90be0afd}{evaluate\+\_\+population}} (Self self, \mbox{\hyperlink{classcore_1_1population_1_1_population}{Population}}\mbox{[}T\mbox{]} pop)
+\end{DoxyCompactItemize}
+\doxysubsection*{Public Member Functions inherited from \mbox{\hyperlink{classevolvables_1_1expression_1_1_program}{evolvables.\+expression.\+Program}}}
+\begin{DoxyCompactItemize}
+\item 
+str {\bfseries \+\_\+\+\_\+str\+\_\+\+\_\+} (self)
+\item 
+List\mbox{[}\mbox{\hyperlink{classevolvables_1_1expression_1_1_expression}{Expression}}\mbox{[}T\mbox{]}\mbox{]} {\bfseries nodes} (self)
+\item 
+Self \mbox{\hyperlink{classevolvables_1_1expression_1_1_program_a159a164097fa8fe919437743bdceedd8}{copy}} (self)
+\end{DoxyCompactItemize}
+\doxysubsubsection*{Static Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\Hypertarget{classevolvables_1_1expression_1_1_gym_evaluator_a2db8429ce3c0b02ba359162dc1fa7567}\label{classevolvables_1_1expression_1_1_gym_evaluator_a2db8429ce3c0b02ba359162dc1fa7567} 
+float {\bfseries evaluate\+\_\+episode} (\mbox{\hyperlink{classevolvables_1_1expression_1_1_program}{Program}}\mbox{[}float\mbox{]} s1, env, Callable\mbox{[}\mbox{[}float\mbox{]}, float\mbox{]} wrapper, int step\+\_\+count)
+\item 
+\Hypertarget{classevolvables_1_1expression_1_1_gym_evaluator_a8fc578cee5dbbd0737940812a6e3f569}\label{classevolvables_1_1expression_1_1_gym_evaluator_a8fc578cee5dbbd0737940812a6e3f569} 
+float {\bfseries evaluate\+\_\+step} (\mbox{\hyperlink{classevolvables_1_1expression_1_1_program}{Program}}\mbox{[}float\mbox{]} s1, env, Callable\mbox{[}\mbox{[}float\mbox{]}, float\mbox{]} wrapper)
+\end{DoxyCompactItemize}
+\doxysubsection*{Static Public Member Functions inherited from \mbox{\hyperlink{classcore_1_1evaluator_1_1_evaluator}{core.\+evaluator.\+Evaluator}}}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\hyperlink{classcore_1_1evaluator_1_1_evaluator_a6fab9e8d19a0565b20806715ff4d8e78}{evaluate\+\_\+shortcut}} (func)
+\begin{DoxyCompactList}\small\item\em Apply the "{}dynamic scoring"{} heuristic to the evaluate(.) method. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\doxysubsubsection*{Public Attributes}
+\begin{DoxyCompactItemize}
+\item 
+\Hypertarget{classevolvables_1_1expression_1_1_gym_evaluator_acf1837fa8cff0040761e0f15b5b37dc1}\label{classevolvables_1_1expression_1_1_gym_evaluator_acf1837fa8cff0040761e0f15b5b37dc1} 
+{\bfseries env}
+\item 
+\Hypertarget{classevolvables_1_1expression_1_1_gym_evaluator_afeb441f155c574d75673dda83a1d9f84}\label{classevolvables_1_1expression_1_1_gym_evaluator_afeb441f155c574d75673dda83a1d9f84} 
+{\bfseries wrapper}
+\item 
+\Hypertarget{classevolvables_1_1expression_1_1_gym_evaluator_a7990410a6aab5083ed9d07b1b80982f6}\label{classevolvables_1_1expression_1_1_gym_evaluator_a7990410a6aab5083ed9d07b1b80982f6} 
+{\bfseries step\+\_\+count}
+\item 
+\Hypertarget{classevolvables_1_1expression_1_1_gym_evaluator_aa3beb38f5fa4ac62cadfbb0a3fd27527}\label{classevolvables_1_1expression_1_1_gym_evaluator_aa3beb38f5fa4ac62cadfbb0a3fd27527} 
+{\bfseries score\+\_\+wrapper}
+\end{DoxyCompactItemize}
+\doxysubsection*{Public Attributes inherited from \mbox{\hyperlink{classevolvables_1_1expression_1_1_program}{evolvables.\+expression.\+Program}}}
+\begin{DoxyCompactItemize}
+\item 
+{\bfseries expr}
+\item 
+{\bfseries symbols}
+\end{DoxyCompactItemize}
+\doxysubsubsection*{Additional Inherited Members}
+\doxysubsection*{Static Protected Member Functions inherited from \mbox{\hyperlink{classevolvables_1_1expression_1_1_program}{evolvables.\+expression.\+Program}}}
+\begin{DoxyCompactItemize}
+\item 
+None {\bfseries \+\_\+assign\+\_\+values} (List\mbox{[}\mbox{\hyperlink{classevolvables_1_1expression_1_1_symbol}{Symbol}}\mbox{[}T\mbox{]}\mbox{]} symbols, Tuple\mbox{[}T,...\mbox{]} values)
+\end{DoxyCompactItemize}
+
+
+\doxysubsection{Constructor \& Destructor Documentation}
+\Hypertarget{classevolvables_1_1expression_1_1_gym_evaluator_a0fdc78bd5b112f9e50367c927af596b2}\label{classevolvables_1_1expression_1_1_gym_evaluator_a0fdc78bd5b112f9e50367c927af596b2} 
+\index{evolvables.expression.GymEvaluator@{evolvables.expression.GymEvaluator}!\_\_init\_\_@{\_\_init\_\_}}
+\index{\_\_init\_\_@{\_\_init\_\_}!evolvables.expression.GymEvaluator@{evolvables.expression.GymEvaluator}}
+\doxysubsubsection{\texorpdfstring{\_\_init\_\_()}{\_\_init\_\_()}}
+{\footnotesize\ttfamily evolvables.\+expression.\+Gym\+Evaluator.\+\_\+\+\_\+init\+\_\+\+\_\+ (\begin{DoxyParamCaption}\item[{}]{self,  }\item[{}]{env,  }\item[{Callable\mbox{[}\mbox{[}float\mbox{]}, float\mbox{]}}]{wrapper,  }\item[{int}]{step\+\_\+count,  }\item[{Callable\mbox{[}\mbox{[}float\mbox{]}, float\mbox{]} }]{score\+\_\+wrapper = {\ttfamily lambda~x~\+:~x} }\end{DoxyParamCaption})}
+
+
+
+Reimplemented from \mbox{\hyperlink{classevolvables_1_1expression_1_1_program}{evolvables.\+expression.\+Program}}.
+
+
+
+\doxysubsection{Member Function Documentation}
+\Hypertarget{classevolvables_1_1expression_1_1_gym_evaluator_acaace84ef59de74bd87186f57719048e}\label{classevolvables_1_1expression_1_1_gym_evaluator_acaace84ef59de74bd87186f57719048e} 
+\index{evolvables.expression.GymEvaluator@{evolvables.expression.GymEvaluator}!evaluate@{evaluate}}
+\index{evaluate@{evaluate}!evolvables.expression.GymEvaluator@{evolvables.expression.GymEvaluator}}
+\doxysubsubsection{\texorpdfstring{evaluate()}{evaluate()}}
+{\footnotesize\ttfamily  float evolvables.\+expression.\+Gym\+Evaluator.\+evaluate (\begin{DoxyParamCaption}\item[{}]{self,  }\item[{\mbox{\hyperlink{classevolvables_1_1expression_1_1_program}{Program}}\mbox{[}float\mbox{]}}]{s1 }\end{DoxyParamCaption})}
+
+\begin{DoxyVerb}Evaluate an individual and return the score.
+    Higher scores are better.
+\end{DoxyVerb}
+ 
+
+Reimplemented from \mbox{\hyperlink{classcore_1_1evaluator_1_1_evaluator_a0c0adf356a04f378660032dc52d4a3bc}{core.\+evaluator.\+Evaluator}}.
+
+
+
+The documentation for this class was generated from the following file\+:\begin{DoxyCompactItemize}
+\item 
+src/evolvables/expression.\+py\end{DoxyCompactItemize}

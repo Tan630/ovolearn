@@ -1,0 +1,60 @@
+\doxysection{core.\+evaluator.\+Evaluator Class Reference}
+\hypertarget{classcore_1_1evaluator_1_1_evaluator}{}\label{classcore_1_1evaluator_1_1_evaluator}\index{core.evaluator.Evaluator@{core.evaluator.Evaluator}}
+Inheritance diagram for core.\+evaluator.\+Evaluator\+:\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[height=2.445415cm]{classcore_1_1evaluator_1_1_evaluator}
+\end{center}
+\end{figure}
+\doxysubsubsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+float \mbox{\hyperlink{classcore_1_1evaluator_1_1_evaluator_a0c0adf356a04f378660032dc52d4a3bc}{evaluate}} (Self self, T s1)
+\item 
+float \mbox{\hyperlink{classcore_1_1evaluator_1_1_evaluator_af83cf211c2b4fb70cdedb2fb90be0afd}{evaluate\+\_\+population}} (Self self, \mbox{\hyperlink{classcore_1_1population_1_1_population}{Population}}\mbox{[}T\mbox{]} pop)
+\end{DoxyCompactItemize}
+\doxysubsubsection*{Static Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\hyperlink{classcore_1_1evaluator_1_1_evaluator_a6fab9e8d19a0565b20806715ff4d8e78}{evaluate\+\_\+shortcut}} (func)
+\begin{DoxyCompactList}\small\item\em Apply the "{}dynamic scoring"{} heuristic to the evaluate(.) method. \end{DoxyCompactList}\end{DoxyCompactItemize}
+
+
+\doxysubsection{Member Function Documentation}
+\Hypertarget{classcore_1_1evaluator_1_1_evaluator_a0c0adf356a04f378660032dc52d4a3bc}\label{classcore_1_1evaluator_1_1_evaluator_a0c0adf356a04f378660032dc52d4a3bc} 
+\index{core.evaluator.Evaluator@{core.evaluator.Evaluator}!evaluate@{evaluate}}
+\index{evaluate@{evaluate}!core.evaluator.Evaluator@{core.evaluator.Evaluator}}
+\doxysubsubsection{\texorpdfstring{evaluate()}{evaluate()}}
+{\footnotesize\ttfamily  float core.\+evaluator.\+Evaluator.\+evaluate (\begin{DoxyParamCaption}\item[{Self}]{self,  }\item[{T}]{s1 }\end{DoxyParamCaption})}
+
+\begin{DoxyVerb}Evaluate an individual and return the score.
+    Higher scores are better.
+\end{DoxyVerb}
+ 
+
+Reimplemented in \mbox{\hyperlink{classcore_1_1main_1_1_bit_distance_evaluator_ab0faad12ce650d86966d625941cd07ce}{core.\+main.\+Bit\+Distance\+Evaluator}}, and \mbox{\hyperlink{classevolvables_1_1expression_1_1_gym_evaluator_acaace84ef59de74bd87186f57719048e}{evolvables.\+expression.\+Gym\+Evaluator}}.
+
+\Hypertarget{classcore_1_1evaluator_1_1_evaluator_af83cf211c2b4fb70cdedb2fb90be0afd}\label{classcore_1_1evaluator_1_1_evaluator_af83cf211c2b4fb70cdedb2fb90be0afd} 
+\index{core.evaluator.Evaluator@{core.evaluator.Evaluator}!evaluate\_population@{evaluate\_population}}
+\index{evaluate\_population@{evaluate\_population}!core.evaluator.Evaluator@{core.evaluator.Evaluator}}
+\doxysubsubsection{\texorpdfstring{evaluate\_population()}{evaluate\_population()}}
+{\footnotesize\ttfamily  float core.\+evaluator.\+Evaluator.\+evaluate\+\_\+population (\begin{DoxyParamCaption}\item[{Self}]{self,  }\item[{\mbox{\hyperlink{classcore_1_1population_1_1_population}{Population}}\mbox{[}T\mbox{]}}]{pop }\end{DoxyParamCaption})}
+
+\begin{DoxyVerb}Return the score of a population.
+    Default implementation: evaluate the sum of the scores of individuals.
+\end{DoxyVerb}
+ \Hypertarget{classcore_1_1evaluator_1_1_evaluator_a6fab9e8d19a0565b20806715ff4d8e78}\label{classcore_1_1evaluator_1_1_evaluator_a6fab9e8d19a0565b20806715ff4d8e78} 
+\index{core.evaluator.Evaluator@{core.evaluator.Evaluator}!evaluate\_shortcut@{evaluate\_shortcut}}
+\index{evaluate\_shortcut@{evaluate\_shortcut}!core.evaluator.Evaluator@{core.evaluator.Evaluator}}
+\doxysubsubsection{\texorpdfstring{evaluate\_shortcut()}{evaluate\_shortcut()}}
+{\footnotesize\ttfamily core.\+evaluator.\+Evaluator.\+evaluate\+\_\+shortcut (\begin{DoxyParamCaption}\item[{}]{func }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [static]}}
+
+
+
+Apply the "{}dynamic scoring"{} heuristic to the evaluate(.) method. 
+
+@\+TODO The same heuristic is implemented by default in the selector. It is prone to cause problems. 
+
+The documentation for this class was generated from the following file\+:\begin{DoxyCompactItemize}
+\item 
+src/core/evaluator.\+py\end{DoxyCompactItemize}

@@ -1,0 +1,111 @@
+\doxysection{core.\+selector.\+Selector\+Decorator Class Reference}
+\hypertarget{classcore_1_1selector_1_1_selector_decorator}{}\label{classcore_1_1selector_1_1_selector_decorator}\index{core.selector.SelectorDecorator@{core.selector.SelectorDecorator}}
+
+
+Many-\/to-\/many selection strategy.  
+
+
+Inheritance diagram for core.\+selector.\+Selector\+Decorator\+:\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[height=3.260553cm]{classcore_1_1selector_1_1_selector_decorator}
+\end{center}
+\end{figure}
+\doxysubsubsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\hyperlink{classcore_1_1selector_1_1_selector_decorator_a36dea5bb9b8eb0a74f54a8706ca0c869}{\+\_\+\+\_\+init\+\_\+\+\_\+}} (typing.\+Self self, \mbox{\hyperlink{classcore_1_1selector_1_1_selector}{Selector}}\mbox{[}T\mbox{]} selector)
+\item 
+\mbox{\hyperlink{classcore_1_1population_1_1_genome_pool}{Genome\+Pool}}\mbox{[}T\mbox{]} \mbox{\hyperlink{classcore_1_1selector_1_1_selector_decorator_a251fa5c3ba08dd4443b76f7f6924a09f}{select\+\_\+to\+\_\+pool}} (self, \texorpdfstring{$\ast$}{*}args)
+\item 
+\mbox{\hyperlink{classcore_1_1population_1_1_population}{Population}}\mbox{[}T\mbox{]} \mbox{\hyperlink{classcore_1_1selector_1_1_selector_decorator_a09adb24ce216d04a0cb0de5104130300}{select\+\_\+to\+\_\+population}} (self, \texorpdfstring{$\ast$}{*}args)
+\item 
+T \mbox{\hyperlink{classcore_1_1selector_1_1_selector_decorator_a4ec5ce7902992d84e2fc0c2544b33b45}{select}} (self, \texorpdfstring{$\ast$}{*}args)
+\begin{DoxyCompactList}\small\item\em Repeatedly apply select to create a collection of solutions. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\doxysubsection*{Public Member Functions inherited from \mbox{\hyperlink{classcore_1_1selector_1_1_selector}{core.\+selector.\+Selector}}}
+\begin{DoxyCompactItemize}
+\item 
+Iterable\mbox{[}T\mbox{]} \mbox{\hyperlink{classcore_1_1selector_1_1_selector_af55cf8661a9b40936a1bf31190e6260b}{select\+\_\+to\+\_\+many}} (self, \mbox{\hyperlink{classcore_1_1population_1_1_population}{Population}}\mbox{[}T\mbox{]} population, \mbox{\hyperlink{classcore_1_1evaluator_1_1_evaluator}{Evaluator}}\mbox{[}T\mbox{]} evaluator, Optional\mbox{[}int\mbox{]} budget=None)
+\begin{DoxyCompactList}\small\item\em Many-\/to-\/many selection strategy. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\doxysubsubsection*{Public Attributes}
+\begin{DoxyCompactItemize}
+\item 
+\Hypertarget{classcore_1_1selector_1_1_selector_decorator_a16f5fc4d9ca0adce5bcbfa97fd178d23}\label{classcore_1_1selector_1_1_selector_decorator_a16f5fc4d9ca0adce5bcbfa97fd178d23} 
+{\bfseries selector}
+\end{DoxyCompactItemize}
+\doxysubsection*{Public Attributes inherited from \mbox{\hyperlink{classcore_1_1selector_1_1_selector}{core.\+selector.\+Selector}}}
+\begin{DoxyCompactItemize}
+\item 
+{\bfseries arity}
+\item 
+{\bfseries coarity}
+\item 
+{\bfseries budget}
+\end{DoxyCompactItemize}
+
+
+\doxysubsection{Detailed Description}
+Many-\/to-\/many selection strategy. 
+
+Repeatedly applying strategy to create a collection of solutions. 
+
+\doxysubsection{Constructor \& Destructor Documentation}
+\Hypertarget{classcore_1_1selector_1_1_selector_decorator_a36dea5bb9b8eb0a74f54a8706ca0c869}\label{classcore_1_1selector_1_1_selector_decorator_a36dea5bb9b8eb0a74f54a8706ca0c869} 
+\index{core.selector.SelectorDecorator@{core.selector.SelectorDecorator}!\_\_init\_\_@{\_\_init\_\_}}
+\index{\_\_init\_\_@{\_\_init\_\_}!core.selector.SelectorDecorator@{core.selector.SelectorDecorator}}
+\doxysubsubsection{\texorpdfstring{\_\_init\_\_()}{\_\_init\_\_()}}
+{\footnotesize\ttfamily core.\+selector.\+Selector\+Decorator.\+\_\+\+\_\+init\+\_\+\+\_\+ (\begin{DoxyParamCaption}\item[{typing.\+Self}]{self,  }\item[{\mbox{\hyperlink{classcore_1_1selector_1_1_selector}{Selector}}\mbox{[}T\mbox{]}}]{selector }\end{DoxyParamCaption})}
+
+
+
+Reimplemented from \mbox{\hyperlink{classcore_1_1selector_1_1_selector}{core.\+selector.\+Selector}}.
+
+
+
+\doxysubsection{Member Function Documentation}
+\Hypertarget{classcore_1_1selector_1_1_selector_decorator_a4ec5ce7902992d84e2fc0c2544b33b45}\label{classcore_1_1selector_1_1_selector_decorator_a4ec5ce7902992d84e2fc0c2544b33b45} 
+\index{core.selector.SelectorDecorator@{core.selector.SelectorDecorator}!select@{select}}
+\index{select@{select}!core.selector.SelectorDecorator@{core.selector.SelectorDecorator}}
+\doxysubsubsection{\texorpdfstring{select()}{select()}}
+{\footnotesize\ttfamily  T core.\+selector.\+Selector\+Decorator.\+select (\begin{DoxyParamCaption}\item[{}]{self,  }\item[{\texorpdfstring{$\ast$}{*}}]{parents }\end{DoxyParamCaption})}
+
+
+
+Repeatedly apply select to create a collection of solutions. 
+
+Destory the input population. \begin{DoxyParagraph}{Side Effects\+:}
+Destroy the input population 
+\end{DoxyParagraph}
+
+
+Reimplemented from \mbox{\hyperlink{classcore_1_1selector_1_1_selector_ab3a88e243009e08b7d4fb41fa28eca3a}{core.\+selector.\+Selector}}.
+
+
+
+Reimplemented in \mbox{\hyperlink{classcore_1_1selector_1_1_elitis_selector_decorator_a6709b0fe749cae8f1eaa5b3c9f6801ff}{core.\+selector.\+Elitis\+Selector\+Decorator}}.
+
+\Hypertarget{classcore_1_1selector_1_1_selector_decorator_a251fa5c3ba08dd4443b76f7f6924a09f}\label{classcore_1_1selector_1_1_selector_decorator_a251fa5c3ba08dd4443b76f7f6924a09f} 
+\index{core.selector.SelectorDecorator@{core.selector.SelectorDecorator}!select\_to\_pool@{select\_to\_pool}}
+\index{select\_to\_pool@{select\_to\_pool}!core.selector.SelectorDecorator@{core.selector.SelectorDecorator}}
+\doxysubsubsection{\texorpdfstring{select\_to\_pool()}{select\_to\_pool()}}
+{\footnotesize\ttfamily  \mbox{\hyperlink{classcore_1_1population_1_1_genome_pool}{Genome\+Pool}}\mbox{[}T\mbox{]} core.\+selector.\+Selector\+Decorator.\+select\+\_\+to\+\_\+pool (\begin{DoxyParamCaption}\item[{}]{self,  }\item[{\texorpdfstring{$\ast$}{*}}]{args }\end{DoxyParamCaption})}
+
+
+
+Reimplemented from \mbox{\hyperlink{classcore_1_1selector_1_1_selector}{core.\+selector.\+Selector}}.
+
+\Hypertarget{classcore_1_1selector_1_1_selector_decorator_a09adb24ce216d04a0cb0de5104130300}\label{classcore_1_1selector_1_1_selector_decorator_a09adb24ce216d04a0cb0de5104130300} 
+\index{core.selector.SelectorDecorator@{core.selector.SelectorDecorator}!select\_to\_population@{select\_to\_population}}
+\index{select\_to\_population@{select\_to\_population}!core.selector.SelectorDecorator@{core.selector.SelectorDecorator}}
+\doxysubsubsection{\texorpdfstring{select\_to\_population()}{select\_to\_population()}}
+{\footnotesize\ttfamily  \mbox{\hyperlink{classcore_1_1population_1_1_population}{Population}}\mbox{[}T\mbox{]} core.\+selector.\+Selector\+Decorator.\+select\+\_\+to\+\_\+population (\begin{DoxyParamCaption}\item[{}]{self,  }\item[{\texorpdfstring{$\ast$}{*}}]{args }\end{DoxyParamCaption})}
+
+
+
+Reimplemented from \mbox{\hyperlink{classcore_1_1selector_1_1_selector}{core.\+selector.\+Selector}}.
+
+
+
+The documentation for this class was generated from the following file\+:\begin{DoxyCompactItemize}
+\item 
+src/core/selector.\+py\end{DoxyCompactItemize}

@@ -1,0 +1,62 @@
+\doxysection{core.\+variator.\+Variator Class Reference}
+\hypertarget{classcore_1_1variator_1_1_variator}{}\label{classcore_1_1variator_1_1_variator}\index{core.variator.Variator@{core.variator.Variator}}
+Inheritance diagram for core.\+variator.\+Variator\+:\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[height=1.848185cm]{classcore_1_1variator_1_1_variator}
+\end{center}
+\end{figure}
+\doxysubsubsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\Hypertarget{classcore_1_1variator_1_1_variator_a26bd85378d2ab256599d271f75c7a3f6}\label{classcore_1_1variator_1_1_variator_a26bd85378d2ab256599d271f75c7a3f6} 
+None {\bfseries \+\_\+\+\_\+init\+\_\+\+\_\+} (self, arity, coarity, checked)
+\item 
+Tuple\mbox{[}T,...\mbox{]} \mbox{\hyperlink{classcore_1_1variator_1_1_variator_a0952e1abad7d70d0b98e6b0d32b6f88e}{vary}} (self, Tuple\mbox{[}T,...\mbox{]} parents)
+\begin{DoxyCompactList}\small\item\em Appy the variator to a tuple of parents Produce a tuple of genomes from a tuple of genomes. \end{DoxyCompactList}\item 
+\mbox{\hyperlink{classcore_1_1population_1_1_population}{Population}}\mbox{[}T\mbox{]} \mbox{\hyperlink{classcore_1_1variator_1_1_variator_a78dc1f17c9a6b9a6e4ff505ac72d6209}{vary\+\_\+pool}} (self, \mbox{\hyperlink{classcore_1_1population_1_1_genome_pool}{Genome\+Pool}}\mbox{[}T\mbox{]} pool, typing.\+Any rate=None)
+\begin{DoxyCompactList}\small\item\em Apply the variator to a pool of tuples of parents. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\doxysubsubsection*{Public Attributes}
+\begin{DoxyCompactItemize}
+\item 
+\Hypertarget{classcore_1_1variator_1_1_variator_a3227453f6132176a08e67b684a5053c2}\label{classcore_1_1variator_1_1_variator_a3227453f6132176a08e67b684a5053c2} 
+{\bfseries arity}
+\item 
+\Hypertarget{classcore_1_1variator_1_1_variator_a57476927c329fb6c18dc7500bcbccd67}\label{classcore_1_1variator_1_1_variator_a57476927c329fb6c18dc7500bcbccd67} 
+{\bfseries coarity}
+\item 
+\Hypertarget{classcore_1_1variator_1_1_variator_afe975b1fc5fc366d1e584e62e2b6f6b3}\label{classcore_1_1variator_1_1_variator_afe975b1fc5fc366d1e584e62e2b6f6b3} 
+{\bfseries checked}
+\end{DoxyCompactItemize}
+
+
+\doxysubsection{Member Function Documentation}
+\Hypertarget{classcore_1_1variator_1_1_variator_a0952e1abad7d70d0b98e6b0d32b6f88e}\label{classcore_1_1variator_1_1_variator_a0952e1abad7d70d0b98e6b0d32b6f88e} 
+\index{core.variator.Variator@{core.variator.Variator}!vary@{vary}}
+\index{vary@{vary}!core.variator.Variator@{core.variator.Variator}}
+\doxysubsubsection{\texorpdfstring{vary()}{vary()}}
+{\footnotesize\ttfamily  Tuple\mbox{[}T, ...\mbox{]} core.\+variator.\+Variator.\+vary (\begin{DoxyParamCaption}\item[{}]{self,  }\item[{Tuple\mbox{[}T, ...\mbox{]}}]{parents }\end{DoxyParamCaption})}
+
+
+
+Appy the variator to a tuple of parents Produce a tuple of genomes from a tuple of genomes. 
+
+The input and output tuple sizes should match the arity and coarity of this selector, respectively. Implementation note\+: clear the score first. 
+
+Reimplemented in \mbox{\hyperlink{classcore_1_1main_1_1_random_bit_mutator_a887e93b73475fcfe551c08c88dc4e8d0}{core.\+main.\+Random\+Bit\+Mutator}}, \mbox{\hyperlink{classevolvables_1_1expression_1_1_program_crossover_variator_a32aa83bb1a785d299b5245d07a655a51}{evolvables.\+expression.\+Program\+Crossover\+Variator}}, and \mbox{\hyperlink{classcore_1_1variator_1_1_default_variator_a86182abffd7b6c5e5c93e439be91115a}{core.\+variator.\+Default\+Variator}}.
+
+\Hypertarget{classcore_1_1variator_1_1_variator_a78dc1f17c9a6b9a6e4ff505ac72d6209}\label{classcore_1_1variator_1_1_variator_a78dc1f17c9a6b9a6e4ff505ac72d6209} 
+\index{core.variator.Variator@{core.variator.Variator}!vary\_pool@{vary\_pool}}
+\index{vary\_pool@{vary\_pool}!core.variator.Variator@{core.variator.Variator}}
+\doxysubsubsection{\texorpdfstring{vary\_pool()}{vary\_pool()}}
+{\footnotesize\ttfamily  \mbox{\hyperlink{classcore_1_1population_1_1_population}{Population}}\mbox{[}T\mbox{]}  core.\+variator.\+Variator.\+vary\+\_\+pool (\begin{DoxyParamCaption}\item[{}]{self,  }\item[{\mbox{\hyperlink{classcore_1_1population_1_1_genome_pool}{Genome\+Pool}}\mbox{[}T\mbox{]}}]{pool,  }\item[{typing.\+Any }]{rate = {\ttfamily None} }\end{DoxyParamCaption})}
+
+
+
+Apply the variator to a pool of tuples of parents. 
+
+Also applies the "{}dynamic scoring"{} heuristic\+: the score of a genome is assigned to it as a field. Inspecting this field instead of evaluating the solution may save cost. @\+TODO This heuristic has caused several problems in implementation. One more moving piece. 
+
+The documentation for this class was generated from the following file\+:\begin{DoxyCompactItemize}
+\item 
+src/core/variator.\+py\end{DoxyCompactItemize}

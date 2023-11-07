@@ -1,0 +1,83 @@
+\doxysection{evolvables.\+expression.\+Program\+Crossover\+Variator Class Reference}
+\hypertarget{classevolvables_1_1expression_1_1_program_crossover_variator}{}\label{classevolvables_1_1expression_1_1_program_crossover_variator}\index{evolvables.expression.ProgramCrossoverVariator@{evolvables.expression.ProgramCrossoverVariator}}
+Inheritance diagram for evolvables.\+expression.\+Program\+Crossover\+Variator\+:\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[height=1.232123cm]{classevolvables_1_1expression_1_1_program_crossover_variator}
+\end{center}
+\end{figure}
+\doxysubsubsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+Tuple\mbox{[}\mbox{\hyperlink{classevolvables_1_1expression_1_1_program}{Program}}\mbox{[}T\mbox{]},...\mbox{]} \mbox{\hyperlink{classevolvables_1_1expression_1_1_program_crossover_variator_a32aa83bb1a785d299b5245d07a655a51}{vary}} (self, Tuple\mbox{[}\mbox{\hyperlink{classevolvables_1_1expression_1_1_program}{Program}}\mbox{[}T\mbox{]},...\mbox{]} parents)
+\begin{DoxyCompactList}\small\item\em Appy the variator to a tuple of parents Produce a tuple of genomes from a tuple of genomes. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\doxysubsection*{Public Member Functions inherited from \mbox{\hyperlink{classcore_1_1variator_1_1_variator}{core.\+variator.\+Variator}}}
+\begin{DoxyCompactItemize}
+\item 
+None {\bfseries \+\_\+\+\_\+init\+\_\+\+\_\+} (self, arity, coarity, checked)
+\item 
+\mbox{\hyperlink{classcore_1_1population_1_1_population}{Population}}\mbox{[}T\mbox{]} \mbox{\hyperlink{classcore_1_1variator_1_1_variator_a78dc1f17c9a6b9a6e4ff505ac72d6209}{vary\+\_\+pool}} (self, \mbox{\hyperlink{classcore_1_1population_1_1_genome_pool}{Genome\+Pool}}\mbox{[}T\mbox{]} pool, typing.\+Any rate=None)
+\begin{DoxyCompactList}\small\item\em Apply the variator to a pool of tuples of parents. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\doxysubsection*{Public Member Functions inherited from \mbox{\hyperlink{classevolvables_1_1expression_1_1_program}{evolvables.\+expression.\+Program}}}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\hyperlink{classevolvables_1_1expression_1_1_program_a11794d8987cd0cb3eed82db9f3d28cd9}{\+\_\+\+\_\+init\+\_\+\+\_\+}} (self, \mbox{\hyperlink{classevolvables_1_1expression_1_1_expression}{Expression}} expr, List\mbox{[}\mbox{\hyperlink{classevolvables_1_1expression_1_1_symbol}{Symbol}}\mbox{]} symbols)
+\item 
+T \mbox{\hyperlink{classevolvables_1_1expression_1_1_program_a56d927c90d7cbb6a68b8d92ce5a25e20}{evaluate}} (self, \texorpdfstring{$\ast$}{*}T args)
+\item 
+str {\bfseries \+\_\+\+\_\+str\+\_\+\+\_\+} (self)
+\item 
+List\mbox{[}\mbox{\hyperlink{classevolvables_1_1expression_1_1_expression}{Expression}}\mbox{[}T\mbox{]}\mbox{]} {\bfseries nodes} (self)
+\item 
+Self \mbox{\hyperlink{classevolvables_1_1expression_1_1_program_a159a164097fa8fe919437743bdceedd8}{copy}} (self)
+\end{DoxyCompactItemize}
+\doxysubsubsection*{Static Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\Hypertarget{classevolvables_1_1expression_1_1_program_crossover_variator_aa4565f6a19ee398cb02a56d8f50ea9e6}\label{classevolvables_1_1expression_1_1_program_crossover_variator_aa4565f6a19ee398cb02a56d8f50ea9e6} 
+None {\bfseries swap\+\_\+children} (\mbox{\hyperlink{classevolvables_1_1expression_1_1_expression}{Expression}}\mbox{[}T\mbox{]} expr1, \mbox{\hyperlink{classevolvables_1_1expression_1_1_expression}{Expression}}\mbox{[}T\mbox{]} expr2)
+\end{DoxyCompactItemize}
+\doxysubsubsection*{Additional Inherited Members}
+\doxysubsection*{Public Attributes inherited from \mbox{\hyperlink{classcore_1_1variator_1_1_variator}{core.\+variator.\+Variator}}}
+\begin{DoxyCompactItemize}
+\item 
+{\bfseries arity}
+\item 
+{\bfseries coarity}
+\item 
+{\bfseries checked}
+\end{DoxyCompactItemize}
+\doxysubsection*{Public Attributes inherited from \mbox{\hyperlink{classevolvables_1_1expression_1_1_program}{evolvables.\+expression.\+Program}}}
+\begin{DoxyCompactItemize}
+\item 
+{\bfseries expr}
+\item 
+{\bfseries symbols}
+\end{DoxyCompactItemize}
+\doxysubsection*{Static Protected Member Functions inherited from \mbox{\hyperlink{classevolvables_1_1expression_1_1_program}{evolvables.\+expression.\+Program}}}
+\begin{DoxyCompactItemize}
+\item 
+None {\bfseries \+\_\+assign\+\_\+values} (List\mbox{[}\mbox{\hyperlink{classevolvables_1_1expression_1_1_symbol}{Symbol}}\mbox{[}T\mbox{]}\mbox{]} symbols, Tuple\mbox{[}T,...\mbox{]} values)
+\end{DoxyCompactItemize}
+
+
+\doxysubsection{Member Function Documentation}
+\Hypertarget{classevolvables_1_1expression_1_1_program_crossover_variator_a32aa83bb1a785d299b5245d07a655a51}\label{classevolvables_1_1expression_1_1_program_crossover_variator_a32aa83bb1a785d299b5245d07a655a51} 
+\index{evolvables.expression.ProgramCrossoverVariator@{evolvables.expression.ProgramCrossoverVariator}!vary@{vary}}
+\index{vary@{vary}!evolvables.expression.ProgramCrossoverVariator@{evolvables.expression.ProgramCrossoverVariator}}
+\doxysubsubsection{\texorpdfstring{vary()}{vary()}}
+{\footnotesize\ttfamily  Tuple\mbox{[}\mbox{\hyperlink{classevolvables_1_1expression_1_1_program}{Program}}\mbox{[}T\mbox{]}, ...\mbox{]} evolvables.\+expression.\+Program\+Crossover\+Variator.\+vary (\begin{DoxyParamCaption}\item[{}]{self,  }\item[{Tuple\mbox{[}\mbox{\hyperlink{classevolvables_1_1expression_1_1_program}{Program}}\mbox{[}T\mbox{]}, ...\mbox{]}}]{parents }\end{DoxyParamCaption})}
+
+
+
+Appy the variator to a tuple of parents Produce a tuple of genomes from a tuple of genomes. 
+
+The input and output tuple sizes should match the arity and coarity of this selector, respectively. Implementation note\+: clear the score first. 
+
+Reimplemented from \mbox{\hyperlink{classcore_1_1variator_1_1_variator_a0952e1abad7d70d0b98e6b0d32b6f88e}{core.\+variator.\+Variator}}.
+
+
+
+The documentation for this class was generated from the following file\+:\begin{DoxyCompactItemize}
+\item 
+src/evolvables/expression.\+py\end{DoxyCompactItemize}

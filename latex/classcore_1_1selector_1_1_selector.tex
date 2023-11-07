@@ -1,0 +1,114 @@
+\doxysection{core.\+selector.\+Selector Class Reference}
+\hypertarget{classcore_1_1selector_1_1_selector}{}\label{classcore_1_1selector_1_1_selector}\index{core.selector.Selector@{core.selector.Selector}}
+
+
+An abstract selector A selector that can be applied as a parent selector or a survivor selector.  
+
+
+Inheritance diagram for core.\+selector.\+Selector\+:\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[height=3.522013cm]{classcore_1_1selector_1_1_selector}
+\end{center}
+\end{figure}
+\doxysubsubsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\Hypertarget{classcore_1_1selector_1_1_selector_a3cbe972b38d1e5e3b0816db95ae170ce}\label{classcore_1_1selector_1_1_selector_a3cbe972b38d1e5e3b0816db95ae170ce} 
+{\bfseries \+\_\+\+\_\+init\+\_\+\+\_\+} (typing.\+Self self, int coarity, int budget)
+\item 
+\mbox{\hyperlink{classcore_1_1population_1_1_genome_pool}{Genome\+Pool}}\mbox{[}T\mbox{]} \mbox{\hyperlink{classcore_1_1selector_1_1_selector_a311ef4b1cac02387291a897f3220b7b7}{select\+\_\+to\+\_\+pool}} (self, \mbox{\hyperlink{classcore_1_1population_1_1_population}{Population}}\mbox{[}T\mbox{]} population, \mbox{\hyperlink{classcore_1_1evaluator_1_1_evaluator}{Evaluator}}\mbox{[}T\mbox{]} evaluator, Optional\mbox{[}int\mbox{]} budget=None)
+\begin{DoxyCompactList}\small\item\em Select to tuples of parents Select to a Genome\+Pool instance, which can be passed to the variator. \end{DoxyCompactList}\item 
+\mbox{\hyperlink{classcore_1_1population_1_1_population}{Population}}\mbox{[}T\mbox{]} \mbox{\hyperlink{classcore_1_1selector_1_1_selector_a8994c7e12730f947357e34b8542ef588}{select\+\_\+to\+\_\+population}} (self, \mbox{\hyperlink{classcore_1_1population_1_1_population}{Population}}\mbox{[}T\mbox{]} population, \mbox{\hyperlink{classcore_1_1evaluator_1_1_evaluator}{Evaluator}}\mbox{[}T\mbox{]} evaluator, Optional\mbox{[}int\mbox{]} budget=None)
+\begin{DoxyCompactList}\small\item\em Select to a Population Select to a Population instance. \end{DoxyCompactList}\item 
+Iterable\mbox{[}T\mbox{]} \mbox{\hyperlink{classcore_1_1selector_1_1_selector_af55cf8661a9b40936a1bf31190e6260b}{select\+\_\+to\+\_\+many}} (self, \mbox{\hyperlink{classcore_1_1population_1_1_population}{Population}}\mbox{[}T\mbox{]} population, \mbox{\hyperlink{classcore_1_1evaluator_1_1_evaluator}{Evaluator}}\mbox{[}T\mbox{]} evaluator, Optional\mbox{[}int\mbox{]} budget=None)
+\begin{DoxyCompactList}\small\item\em Many-\/to-\/many selection strategy. \end{DoxyCompactList}\item 
+T \mbox{\hyperlink{classcore_1_1selector_1_1_selector_ab3a88e243009e08b7d4fb41fa28eca3a}{select}} (self, \mbox{\hyperlink{classcore_1_1population_1_1_population}{Population}}\mbox{[}T\mbox{]} parents, \mbox{\hyperlink{classcore_1_1evaluator_1_1_evaluator}{Evaluator}}\mbox{[}T\mbox{]} evaluator)
+\begin{DoxyCompactList}\small\item\em Many-\/to-\/one selection strategy Select, possibly stochastically, a solution from the population. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\doxysubsubsection*{Public Attributes}
+\begin{DoxyCompactItemize}
+\item 
+\Hypertarget{classcore_1_1selector_1_1_selector_a17933921e9e5901ebef79923e47b23e1}\label{classcore_1_1selector_1_1_selector_a17933921e9e5901ebef79923e47b23e1} 
+{\bfseries coarity}
+\item 
+\Hypertarget{classcore_1_1selector_1_1_selector_a22106c518c7181b460ee90610eef1454}\label{classcore_1_1selector_1_1_selector_a22106c518c7181b460ee90610eef1454} 
+{\bfseries budget}
+\end{DoxyCompactItemize}
+
+
+\doxysubsection{Detailed Description}
+An abstract selector A selector that can be applied as a parent selector or a survivor selector. 
+
+\doxysubsection{Member Function Documentation}
+\Hypertarget{classcore_1_1selector_1_1_selector_ab3a88e243009e08b7d4fb41fa28eca3a}\label{classcore_1_1selector_1_1_selector_ab3a88e243009e08b7d4fb41fa28eca3a} 
+\index{core.selector.Selector@{core.selector.Selector}!select@{select}}
+\index{select@{select}!core.selector.Selector@{core.selector.Selector}}
+\doxysubsubsection{\texorpdfstring{select()}{select()}}
+{\footnotesize\ttfamily  T core.\+selector.\+Selector.\+select (\begin{DoxyParamCaption}\item[{}]{self,  }\item[{\mbox{\hyperlink{classcore_1_1population_1_1_population}{Population}}\mbox{[}T\mbox{]}}]{parents,  }\item[{\mbox{\hyperlink{classcore_1_1evaluator_1_1_evaluator}{Evaluator}}\mbox{[}T\mbox{]}}]{evaluator }\end{DoxyParamCaption})}
+
+
+
+Many-\/to-\/one selection strategy Select, possibly stochastically, a solution from the population. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em parents} & the input population \\
+\hline
+{\em evaluator} & the evaluator that selects from the input population \\
+\hline
+\end{DoxyParams}
+\begin{DoxyParagraph}{Side Effects\+:}
+Each call takes one member from the input population 
+\end{DoxyParagraph}
+
+
+Reimplemented in \mbox{\hyperlink{classcore_1_1selector_1_1_simple_selector_a07598a053fc8e6ce4d9bc74c57350c58}{core.\+selector.\+Simple\+Selector}}.
+
+\Hypertarget{classcore_1_1selector_1_1_selector_af55cf8661a9b40936a1bf31190e6260b}\label{classcore_1_1selector_1_1_selector_af55cf8661a9b40936a1bf31190e6260b} 
+\index{core.selector.Selector@{core.selector.Selector}!select\_to\_many@{select\_to\_many}}
+\index{select\_to\_many@{select\_to\_many}!core.selector.Selector@{core.selector.Selector}}
+\doxysubsubsection{\texorpdfstring{select\_to\_many()}{select\_to\_many()}}
+{\footnotesize\ttfamily  Iterable\mbox{[}T\mbox{]} core.\+selector.\+Selector.\+select\+\_\+to\+\_\+many (\begin{DoxyParamCaption}\item[{}]{self,  }\item[{\mbox{\hyperlink{classcore_1_1population_1_1_population}{Population}}\mbox{[}T\mbox{]}}]{population,  }\item[{\mbox{\hyperlink{classcore_1_1evaluator_1_1_evaluator}{Evaluator}}\mbox{[}T\mbox{]}}]{evaluator,  }\item[{Optional\mbox{[}int\mbox{]} }]{budget = {\ttfamily None} }\end{DoxyParamCaption})}
+
+
+
+Many-\/to-\/many selection strategy. 
+
+Repeatedly apply select() to create a collection of solutions 
+\begin{DoxyParams}{Parameters}
+{\em popoulation} & the input population \\
+\hline
+{\em evaluator} & the evaluator that selects from the input population \\
+\hline
+{\em budget} & the size of the returned collection. \\
+\hline
+\end{DoxyParams}
+
+
+Reimplemented in \mbox{\hyperlink{classcore_1_1selector_1_1_elitist_simple_selector_aebcf27a3725842a71c2b0bdedbd4f73e}{core.\+selector.\+Elitist\+Simple\+Selector}}.
+
+\Hypertarget{classcore_1_1selector_1_1_selector_a311ef4b1cac02387291a897f3220b7b7}\label{classcore_1_1selector_1_1_selector_a311ef4b1cac02387291a897f3220b7b7} 
+\index{core.selector.Selector@{core.selector.Selector}!select\_to\_pool@{select\_to\_pool}}
+\index{select\_to\_pool@{select\_to\_pool}!core.selector.Selector@{core.selector.Selector}}
+\doxysubsubsection{\texorpdfstring{select\_to\_pool()}{select\_to\_pool()}}
+{\footnotesize\ttfamily  \mbox{\hyperlink{classcore_1_1population_1_1_genome_pool}{Genome\+Pool}}\mbox{[}T\mbox{]} core.\+selector.\+Selector.\+select\+\_\+to\+\_\+pool (\begin{DoxyParamCaption}\item[{}]{self,  }\item[{\mbox{\hyperlink{classcore_1_1population_1_1_population}{Population}}\mbox{[}T\mbox{]}}]{population,  }\item[{\mbox{\hyperlink{classcore_1_1evaluator_1_1_evaluator}{Evaluator}}\mbox{[}T\mbox{]}}]{evaluator,  }\item[{Optional\mbox{[}int\mbox{]} }]{budget = {\ttfamily None} }\end{DoxyParamCaption})}
+
+
+
+Select to tuples of parents Select to a Genome\+Pool instance, which can be passed to the variator. 
+
+The arity of the returned value depends on the arity of the selector. If the population cannot exactly fill tuples of a given size, discard the left-\/over genomes. \Hypertarget{classcore_1_1selector_1_1_selector_a8994c7e12730f947357e34b8542ef588}\label{classcore_1_1selector_1_1_selector_a8994c7e12730f947357e34b8542ef588} 
+\index{core.selector.Selector@{core.selector.Selector}!select\_to\_population@{select\_to\_population}}
+\index{select\_to\_population@{select\_to\_population}!core.selector.Selector@{core.selector.Selector}}
+\doxysubsubsection{\texorpdfstring{select\_to\_population()}{select\_to\_population()}}
+{\footnotesize\ttfamily  \mbox{\hyperlink{classcore_1_1population_1_1_population}{Population}}\mbox{[}T\mbox{]} core.\+selector.\+Selector.\+select\+\_\+to\+\_\+population (\begin{DoxyParamCaption}\item[{}]{self,  }\item[{\mbox{\hyperlink{classcore_1_1population_1_1_population}{Population}}\mbox{[}T\mbox{]}}]{population,  }\item[{\mbox{\hyperlink{classcore_1_1evaluator_1_1_evaluator}{Evaluator}}\mbox{[}T\mbox{]}}]{evaluator,  }\item[{Optional\mbox{[}int\mbox{]} }]{budget = {\ttfamily None} }\end{DoxyParamCaption})}
+
+
+
+Select to a Population Select to a Population instance. 
+
+This might happen, for example, while the selector is acting as a survivor selector. 
+
+The documentation for this class was generated from the following file\+:\begin{DoxyCompactItemize}
+\item 
+src/core/selector.\+py\end{DoxyCompactItemize}

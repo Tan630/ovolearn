@@ -1,0 +1,73 @@
+\doxysection{core.\+variator.\+Default\+Variator Class Reference}
+\hypertarget{classcore_1_1variator_1_1_default_variator}{}\label{classcore_1_1variator_1_1_default_variator}\index{core.variator.DefaultVariator@{core.variator.DefaultVariator}}
+
+
+The default variator does not change anything.  
+
+
+Inheritance diagram for core.\+variator.\+Default\+Variator\+:\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[height=3.000000cm]{classcore_1_1variator_1_1_default_variator}
+\end{center}
+\end{figure}
+\doxysubsubsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\hyperlink{classcore_1_1variator_1_1_default_variator_afa94b0497e58919273527bafe1eb3a41}{\+\_\+\+\_\+init\+\_\+\+\_\+}} (self)
+\item 
+Tuple\mbox{[}T,...\mbox{]} \mbox{\hyperlink{classcore_1_1variator_1_1_default_variator_a86182abffd7b6c5e5c93e439be91115a}{vary}} (self, Tuple\mbox{[}T,...\mbox{]} parents)
+\begin{DoxyCompactList}\small\item\em Appy the variator to a tuple of parents Produce a tuple of genomes from a tuple of genomes. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\doxysubsection*{Public Member Functions inherited from \mbox{\hyperlink{classcore_1_1variator_1_1_variator}{core.\+variator.\+Variator}}}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\hyperlink{classcore_1_1population_1_1_population}{Population}}\mbox{[}T\mbox{]} \mbox{\hyperlink{classcore_1_1variator_1_1_variator_a78dc1f17c9a6b9a6e4ff505ac72d6209}{vary\+\_\+pool}} (self, \mbox{\hyperlink{classcore_1_1population_1_1_genome_pool}{Genome\+Pool}}\mbox{[}T\mbox{]} pool, typing.\+Any rate=None)
+\begin{DoxyCompactList}\small\item\em Apply the variator to a pool of tuples of parents. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\doxysubsubsection*{Additional Inherited Members}
+\doxysubsection*{Public Attributes inherited from \mbox{\hyperlink{classcore_1_1variator_1_1_variator}{core.\+variator.\+Variator}}}
+\begin{DoxyCompactItemize}
+\item 
+{\bfseries arity}
+\item 
+{\bfseries coarity}
+\item 
+{\bfseries checked}
+\end{DoxyCompactItemize}
+
+
+\doxysubsection{Detailed Description}
+The default variator does not change anything. 
+
+\doxysubsection{Constructor \& Destructor Documentation}
+\Hypertarget{classcore_1_1variator_1_1_default_variator_afa94b0497e58919273527bafe1eb3a41}\label{classcore_1_1variator_1_1_default_variator_afa94b0497e58919273527bafe1eb3a41} 
+\index{core.variator.DefaultVariator@{core.variator.DefaultVariator}!\_\_init\_\_@{\_\_init\_\_}}
+\index{\_\_init\_\_@{\_\_init\_\_}!core.variator.DefaultVariator@{core.variator.DefaultVariator}}
+\doxysubsubsection{\texorpdfstring{\_\_init\_\_()}{\_\_init\_\_()}}
+{\footnotesize\ttfamily core.\+variator.\+Default\+Variator.\+\_\+\+\_\+init\+\_\+\+\_\+ (\begin{DoxyParamCaption}\item[{}]{self }\end{DoxyParamCaption})}
+
+
+
+Reimplemented from \mbox{\hyperlink{classcore_1_1variator_1_1_variator}{core.\+variator.\+Variator}}.
+
+
+
+\doxysubsection{Member Function Documentation}
+\Hypertarget{classcore_1_1variator_1_1_default_variator_a86182abffd7b6c5e5c93e439be91115a}\label{classcore_1_1variator_1_1_default_variator_a86182abffd7b6c5e5c93e439be91115a} 
+\index{core.variator.DefaultVariator@{core.variator.DefaultVariator}!vary@{vary}}
+\index{vary@{vary}!core.variator.DefaultVariator@{core.variator.DefaultVariator}}
+\doxysubsubsection{\texorpdfstring{vary()}{vary()}}
+{\footnotesize\ttfamily  Tuple\mbox{[}T, ...\mbox{]} core.\+variator.\+Default\+Variator.\+vary (\begin{DoxyParamCaption}\item[{}]{self,  }\item[{Tuple\mbox{[}T, ...\mbox{]}}]{parents }\end{DoxyParamCaption})}
+
+
+
+Appy the variator to a tuple of parents Produce a tuple of genomes from a tuple of genomes. 
+
+The input and output tuple sizes should match the arity and coarity of this selector, respectively. Implementation note\+: clear the score first. 
+
+Reimplemented from \mbox{\hyperlink{classcore_1_1variator_1_1_variator_a0952e1abad7d70d0b98e6b0d32b6f88e}{core.\+variator.\+Variator}}.
+
+
+
+The documentation for this class was generated from the following file\+:\begin{DoxyCompactItemize}
+\item 
+src/core/variator.\+py\end{DoxyCompactItemize}
