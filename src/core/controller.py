@@ -17,6 +17,7 @@ from core.globals import LogLevel
 
 T = typing.TypeVar("T", bound = Genome)
 TK = typing.TypeVar("TK", bound=Evaluator)
+TV = typing.TypeVar("TV", bound=Variator)
 
 class Controller(typing.Generic[T]):
     """Encapsulated environment where evolutionary learning takes place.

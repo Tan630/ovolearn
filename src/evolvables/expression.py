@@ -16,6 +16,8 @@ from typing import Self
 from typing import Callable
 from inspect import signature
 
+from core.globals import LogLevel
+from core.globals import report
 from core.variator import Variator
 from core.selector import ElitistSimpleSelector
 from core.evaluator import Evaluator
@@ -117,6 +119,10 @@ class ExpressionFactory(typing.Generic[T]):
             children.append(self._build_recurse(depth-1))
 
         root = Expression(target_function, *children)
+        if (self.budget_used < self.budget_cap):
+            report(LogLevel.TRC, f"Tree built below budget! used: {self.budget_used}, cap: {self.budget_cap}")
+        else:
+            report(LogLevel.TRC, f"Tree built at budget. used: {self.budget_used - 1}, cap: {self.budget_cap}")
         return root
         
 
@@ -138,7 +144,7 @@ class ExpressionFactory(typing.Generic[T]):
 
     def cost_budget(self) -> None:
         self.budget_used = self.budget_used + 1
-        print(f"budget used: {self.budget_used - 1} -> {self.budget_used}")
+        # report(LogLevel.TRC, f"budget used: {self.budget_used - 1} -> {self.budget_used}")
     
     def poll_function(self) -> Callable[..., T]:
         self.cost_budget()
@@ -345,18 +351,27 @@ class GymEvaluator(Evaluator[Program[float]]):
     def evaluate_step(s1: Program[float], env, wrapper: Callable[[float], float]) -> float:
         step_result = env.reset()
         score = 0.
-        for i in range(0, 10): #hard coded eval steps for now
+        # hard coded - an episode consists of 10 evaluations.
+        for i in range(0, 10):
             step_result = env.step(wrapper(s1.evaluate(*step_result[0]))) #type: ignore
             if (step_result[2]):
                 break
             score = score + step_result[1] #type: ignore
         return score
 
-pop_size = 10
+# ########## Begin setup :) ########## #
+
+# Size of the population. Affects the size of the initial initial population, also enforced by selectors.
+pop_size = 100
+
+# Depth constraint of the expression tree
 tree_depth = 5
-eval_steps = 10
-node_budget = 6
-iter_bound = 10
+# Node budget of the expression tree
+node_budget = 8
+
+# The number of episodes for each evaluation. The actual score should be the mean of these scores.
+# The length of each episode is hard-coded to be 10 (see `evaluate_step`)
+iter_bound = 100
 
 
 # Build the population of ternary programs. The arity (4) should match the size of the observation space (4 for cartpole)
@@ -378,12 +393,11 @@ def cartpole_wrapper(f: float) -> float:
     return int(max(min(1, f), 0))
 
 eval = gym.make('CartPole-v1')
-evaluator = GymEvaluator(eval, cartpole_wrapper, 10, score_wrapper = lambda x : -x)
+evaluator = GymEvaluator(eval, cartpole_wrapper, iter_bound, score_wrapper = lambda x : -x)
 
 # Selector on standby
 import gymnasium as gym
 sel = ElitistSimpleSelector[Program[float]](coarity = 2, budget = pop_size)
-
 
 
 ctrl = Controller[Program[float]](

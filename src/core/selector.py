@@ -123,7 +123,7 @@ class SimpleSelector(Selector[T]):
                 best_index, best_score, best_solution = (i, current_genome.score, solutions[i])
 
         selected_solution = solutions.draw(best_index)
-        print (str(selected_solution))
+        report(LogLevel.TRC, f"Solution selected: {str(selected_solution)}")
         return selected_solution
     
 class ElitistSimpleSelector(SimpleSelector[T]):
