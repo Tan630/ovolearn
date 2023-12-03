@@ -6,6 +6,7 @@ if visible:
 else:
     env = gym.make("CartPole-v1")
 env.reset()
+
 score = 0.
 
 for i in range(0,100):

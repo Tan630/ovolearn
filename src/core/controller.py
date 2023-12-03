@@ -92,6 +92,10 @@ class Controller(typing.Generic[T]):
         if (accountant is not None):
             accountant(self)
 
+        print ([self.evaluator.evaluate(x) for x in self.population])
+
+        report(LogLevel.WRN, f"Best solution is: {str(self.population[0])}")
+
         return self
     
     def varity_check(self):

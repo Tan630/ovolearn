@@ -13,7 +13,8 @@ class Evaluator(abc.ABC, typing.Generic[T]):
             @TODO The same heuristic is implemented by default in the selector. It is prone to cause problems.
         """
         def wrapper(*args, **kwargs) -> float:
-            genome = args[0]
+            genome = args[1]
+            
             if (isinstance(genome, Genome) and genome.score is not None):
                 return genome.score
             else:
@@ -31,7 +32,6 @@ class Evaluator(abc.ABC, typing.Generic[T]):
         """
         pass
 
-    
 
     # @abc.abstractmethod
     # def truncate(self: Self) -> bool:

@@ -1,6 +1,7 @@
 from __future__ import annotations
 import abc
 import typing
+import math
 
 from typing import Optional
 from typing import Tuple
@@ -25,6 +26,10 @@ from core.controller import Controller
 from core.population import Population
 from core.population import Genome
 
+import random
+
+
+
 import gymnasium as gym
 
 from random import choice
@@ -33,7 +38,6 @@ from random import choice
 T = typing.TypeVar("T")
 
 class ArityMismatch(Exception):
-
     def __init__(self, expr, expected:Optional[int], given: Optional[int]):
         super().__init__(f"Arity mismatch: while evaluating {str(expr)}, "
                          f"{expected} arguments are expected, while "
@@ -67,10 +71,10 @@ class Expression(abc.ABC, typing.Generic[T]):
         return self._function(*results)
     
     def copy(self) -> Self:
+        """ Copying self does not copy the funciton. """
         children_copies : Tuple[Expression[T], ...] = tuple(x.copy() for x in self.children)
         return self.__class__(self._function, *children_copies)
     
-    # Beware this function leans to the left subtree
     def nodes(self) -> List[Expression[T]]:
         return [self] + list(self.children)
     
@@ -91,7 +95,6 @@ class Expression(abc.ABC, typing.Generic[T]):
 
 class ExpressionFactory(typing.Generic[T]):
     def __init__(self, functions: Tuple[Callable[..., T], ...]):
-
         # Build a pool of functions, as a dictionary where each index corresponds to an arity, and each 
         #   value is a list of functions (or terminals!) with that arity.
         self.function_pool: Dict[int, List[Callable[..., T]]] = {}
@@ -153,10 +156,6 @@ class ExpressionFactory(typing.Generic[T]):
     def poll_arity(self, arity: int) -> Callable[..., T]:
         return choice(self.function_pool[arity])
 
-import math
-
-
-
 class BadSymbolError(Exception):
     def __init__(self, name: str):
         super().__init__(f"The symbol {name} is used but not assigned.")
@@ -215,7 +214,7 @@ class ProgramFactory(Generic[T]):
         return Symbol("sym_" + self.next_symbol_name())
     
     def build(self, depth: int, budget: int) -> Program:
-        return Program(self.exprfactory.build(depth, budget), self.symbol_deposit)
+        return Program(self.exprfactory.build(depth, budget), self.symbol_deposit, self)
     
     
     
@@ -225,7 +224,6 @@ class ProgramFactory(Generic[T]):
 # I'm not prepared to deal with concurrency.
 
 class ProgramArityMismatchError(Exception):
-
     def __init__(self, expected:Optional[int], given: Optional[int]):
         super().__init__(f"The program is expecting {expected} arguments, only {given} are given.")
         
@@ -234,10 +232,11 @@ class Program(Genome[T]):
     """
     
     """
-    def __init__(self, expr: Expression, symbols: List[Symbol]):
+    def __init__(self, expr: Expression, symbols: List[Symbol], factory: ProgramFactory):
         super().__init__()
         self.expr = expr
         self.symbols = symbols
+        self.factory = factory
     
     def evaluate(self, *args: T) -> T:
         if (len(args) != len(self.symbols)):
@@ -259,7 +258,7 @@ class Program(Genome[T]):
         return self.expr.nodes()
     
     def copy(self) -> Self:
-        return self.__class__(self.expr.copy(), self.symbols)
+        return self.__class__(self.expr.copy(), self.symbols, self.factory)
 
 def sin(x: float) -> float:
     return math.sin(x)
@@ -284,34 +283,45 @@ def div (x:float, y:float):
         return 1
     return x / y
 
+def avg (x:float, y:float):
+    return (x+y)/2
+
 def lim(x: float, max_val:float, min_val:float) -> float:
     return max(min(max_val, x), min_val)
 
 
-import random
 
-from typing import Iterable
 class ProgramCrossoverVariator(Variator[Program[T]]):
     def vary(self, parents: Tuple[Program[T], ...]) -> Tuple[Program[T], ...]:
+        return (self.crossover(parents) + self.mutate(parents))
+
+
+    def crossover(self, parents: Tuple[Program[T], ...]) -> Tuple[Program[T], ...]:
         root1: Program = parents[0].copy()
         root2: Program = parents[1].copy()
+
         root1.score = None
         root2.score = None
 
         expression_nodes_from_root_1 = root1.nodes()
         expression_nodes_from_root_2 = root2.nodes()
 
-        # this relies on a very ad-hoc implementation that provides access to expressions though the program. 
-        # This should not be possible. But I am tired and cannot think of better ways to do it.
+        # Select internal nodes - nodes that receive arguments.
         expression_internal_nodes_from_root_1 = [x for x in expression_nodes_from_root_1 if len(x.children) > 0]
         expression_internal_nodes_from_root_2 = [x for x in expression_nodes_from_root_2 if len(x.children) > 0]
 
+        # If both expression trees have valid internal nodes, 
         if (len(expression_internal_nodes_from_root_1) >= 1 and len(expression_internal_nodes_from_root_2) >= 1):
             expression_node_from_root_1_to_swap = random.choice(expression_internal_nodes_from_root_1)
             expression_node_from_root_2_to_swap = random.choice(expression_internal_nodes_from_root_2)
             self.__class__.swap_children(expression_node_from_root_1_to_swap, expression_node_from_root_2_to_swap)
 
-        return (root1, root2, root1.copy(), root2.copy())
+        return (root1, root2)
+    
+    def mutate(self, parents: Tuple[Program[T], ...]) -> Tuple[Program[T], ...]:
+        root: Program = parents[0].copy()
+        root.expr._function = self.__class__._draw_replacement_function(root)
+        return (tuple([root]))
 
     @staticmethod
     def swap_children(expr1: Expression[T], expr2: Expression[T]) -> None:
@@ -324,35 +334,43 @@ class ProgramCrossoverVariator(Variator[Program[T]]):
         for i in range(-1,-(len(expr2.children) + 1), -1):
             expr2.children[i] = child_nodes[i].copy()
 
-
-
+    @staticmethod
+    def _draw_replacement_function(program: Program)-> Callable:
+        source_factory = program.factory
+        arity = get_arity(program.expr._function)
+        functions = source_factory.exprfactory.function_pool[arity]
+        return random.choice(functions)
 
 
 class GymEvaluator(Evaluator[Program[float]]):
-    def __init__(self, env, wrapper: Callable[[float], float], step_count: int, score_wrapper: Callable[[float], float] = lambda x : x):
+    def __init__(self, env, wrapper: Callable[[float], float], episode_count: int, step_count: int, score_wrapper: Callable[[float], float] = lambda x : x):
         super().__init__()
         self.env = env
         self.wrapper = wrapper
+        self.episode_count = episode_count
         self.step_count = step_count
         self.score_wrapper = score_wrapper
 
     def evaluate(self, s1: Program[float]) -> float:
-        score = GymEvaluator.evaluate_episode(s1, self.env, self.wrapper, self.step_count) 
+        score = s1.evaluate(1,4,8,16)
+        #score = GymEvaluator.evaluate_episode(s1, self.env, self.wrapper, self.episode_count, self.step_count) 
         return self.score_wrapper(score)
 
     @staticmethod
-    def evaluate_episode(s1: Program[float], env, wrapper: Callable[[float], float], step_count: int) -> float:
+    def evaluate_episode(s1: Program[float], env, wrapper: Callable[[float], float], episode_count: int, step_count: int) -> float:
         score = 0.
-        for i in range(0, step_count):
-            score = score + GymEvaluator.evaluate_step(s1, env, wrapper)
-        return score / step_count
+        for i in range(0, episode_count):
+            score = score + GymEvaluator.evaluate_step(s1, env, wrapper, step_count)
+        return score / episode_count
 
     @staticmethod
-    def evaluate_step(s1: Program[float], env, wrapper: Callable[[float], float]) -> float:
+    def evaluate_step(s1: Program[float], env, wrapper: Callable[[float], float], step_count: int) -> float:
         step_result = env.reset()
         score = 0.
         # hard coded - an episode consists of 10 evaluations.
-        for i in range(0, 10):
+        for i in range(0, step_count):
+            if (len(step_result)>=5 and (step_result[2] or step_result[3])):
+                break
             step_result = env.step(wrapper(s1.evaluate(*step_result[0]))) #type: ignore
             if (step_result[2]):
                 break
@@ -362,50 +380,51 @@ class GymEvaluator(Evaluator[Program[float]]):
 # ########## Begin setup :) ########## #
 
 # Size of the population. Affects the size of the initial initial population, also enforced by selectors.
-pop_size = 100
+pop_size = 30
 
 # Depth constraint of the expression tree
-tree_depth = 5
+tree_depth = 10
 # Node budget of the expression tree
-node_budget = 8
+node_budget = 20
 
 # The number of episodes for each evaluation. The actual score should be the mean of these scores.
 # The length of each episode is hard-coded to be 10 (see `evaluate_step`)
-iter_bound = 100
+step_bound = 25
+episode_bound = 25
 
 
 # Build the population of ternary programs. The arity (4) should match the size of the observation space (4 for cartpole)
-progf = ProgramFactory((add, sub, mul, div, sin, cos, mul, div, lim), 4)
+progf = ProgramFactory((add, sub, mul, div, sin, cos, mul, div, lim, avg), 4)
 
+# Declare and populate the population
 pops: Population[Program[float]] = Population()
 for i in range(0, pop_size):
     pops.append(progf.build(tree_depth, node_budget))
 
 # Prepare the variator
-variator = ProgramCrossoverVariator[Program[float]](arity = 2, coarity = 4, checked = True)
+variator = ProgramCrossoverVariator[Program[float]](arity = 2, coarity = 3, checked = True)
 
-# The evaluaor is ready. Feed the custom wrapper and the environment to GymEvaluator,
-#   which is ... or should able to handle all classical control problems.
+# The evaluaor is ready. Feed the custom wrapper and the environment to GymEvaluator
 def pendulum_wrapper(f: float):
-    return [max(min(2, f), -2)]
+    return [round(max(min(2, f), -2))]
 
-def cartpole_wrapper(f: float) -> float:
-    return int(max(min(1, f), 0))
+def cartpole_wrapper(f: float) -> int:
+    return round(max(min(1, f), 0))
 
 eval = gym.make('CartPole-v1')
-evaluator = GymEvaluator(eval, cartpole_wrapper, iter_bound, score_wrapper = lambda x : -x)
+evaluator = GymEvaluator(eval, cartpole_wrapper, step_bound, episode_bound, score_wrapper = lambda x : -x)
 
-# Selector on standby
+# Prepare the selector.
 import gymnasium as gym
-sel = ElitistSimpleSelector[Program[float]](coarity = 2, budget = pop_size)
-
+selc = ElitistSimpleSelector[Program[float]](coarity = 2, budget = pop_size)
+selp = ElitistSimpleSelector[Program[float]](coarity = 2, budget = pop_size)
 
 ctrl = Controller[Program[float]](
     population = pops,
     evaluator = evaluator,
-    parent_selector = sel,
+    parent_selector = selc,
     variator = variator,
-    survivor_selector = sel
+    survivor_selector = selp
 )
 
 best_solutions: List[Program] = []
@@ -420,8 +439,8 @@ for i in range(0, 20):
     ctrl.step(partial(score_keeper, best_scores, best_solutions))
 
 
-print ([str(x) for x in best_solutions])
-print (str(best_scores))
+# print ([str(x) for x in best_solutions])
+#print (str(best_scores))
 
 
  
