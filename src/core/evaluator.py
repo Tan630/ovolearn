@@ -6,14 +6,19 @@ from core.population import Genome
 
 T = typing.TypeVar("T", bound=Genome)
 
+class ScoringException(Exception): ...
+
 class Evaluator(abc.ABC, typing.Generic[T]):
     @staticmethod
     def evaluate_shortcut(func):
         """!Apply the "dynamic scoring" heuristic to the evaluate(.) method. 
         """
+        
         def wrapper(*args, **kwargs) -> float:
             genome = args[1]
-            if (isinstance(genome, Genome) and genome.score is not None):
+            if (not isinstance(genome, Genome)):
+                raise (ScoringException("This thing is not a genome!"))
+            elif (genome.is_scored()):
                 return genome.score
             else:
                 score: float = func(*args, **kwargs)

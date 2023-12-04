@@ -42,7 +42,7 @@ class Genome(ABC, Generic[R]):
         self._score = None
 
     def is_scored(self)-> bool:
-        return self.score is None
+        return self._score is not None
     
     @abstractmethod
     def copy(self) -> Self: ...
