@@ -1,12 +1,6 @@
-import types
-class A:
-    def printA(self):
-        print ("----")
-        print (self)
+a = [1,2,3,4,5]
+print (a)
+for i in range(0, len(a)):
+    if (i == 1): del a[i]
 
-class B(A):
-    pass
-
-b = B()
-
-b.__class__.__mro__[1].printA(1)
+print (a)

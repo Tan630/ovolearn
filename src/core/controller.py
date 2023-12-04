@@ -69,7 +69,6 @@ class Controller(typing.Generic[T]):
         pop_before_survivor_selection = len(children)
         
         self.evaluator.evaluate_population(children)
-        print ([x.score for x in children])
         survivors = self.survivor_selector.select_to_population(children)
 
         # The survivor become the next population.
@@ -99,8 +98,6 @@ class Controller(typing.Generic[T]):
 
         if (accountant is not None):
             accountant(self)
-
-        print ([self.evaluator.evaluate(x) for x in self.population])
 
         report(LogLevel.WRN, f"Best solution is: {str(self.population[0])}")
 

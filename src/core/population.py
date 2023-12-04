@@ -50,9 +50,6 @@ class Genome(ABC, Generic[R]):
         Copy the solution, so that changes made on the copy do not affect the original genome. The implementation decides if all components must be copied.
     """
 
-    def __eq__(self, other: object)-> bool:
-        return isinstance(other, self.__class__) and self.score == other.score
-
 
 T = TypeVar('T', bound=Genome)
 
@@ -103,17 +100,21 @@ class AbstractCollection(ABC, Generic[R]):
         if isinstance(key, int):
             a : R = self[key]
             del self[key]
+            return a
         else:
+            has_removed = False
             for i in range(len(self)):
                 # Development mark: delete the exception when I finish this
-                has_removed = False
                 if self[i] == key:
                     has_removed = True
                     del self[i]
                     break
-                if not has_removed: raise Exception("the requested item is not in the list")
-            return key        
-        return a
+            if (not has_removed):
+                raise Exception("the requested item is not in the list")     
+            else:
+                return key
+            
+
 
 # P = TypeVar('P', bound=Tuple[Genome, ...])
 class GenomePool(AbstractCollection[Tuple[T, ...]]):

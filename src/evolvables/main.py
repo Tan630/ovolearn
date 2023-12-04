@@ -121,4 +121,3 @@ for i in range(0, 100):
     ctrl.step()
     dicts[i] = ctrl.population[0].score
 
-print (dicts)

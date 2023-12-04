@@ -150,13 +150,15 @@ class TournamentSelector(Selector[T]):
         """!A one-to-one selection strategy.
             Select a uniform sample, then select the best member
         """
-        
-        sample = random.sample(list(population), self.bracket_size)
+        sample: List[T]
+        if len(population) >= self.bracket_size:
+            sample = random.sample(tuple(population), self.bracket_size)
+        else:
+            sample = list(population)
         sample.sort(key = lambda x : x.score, reverse=True)
 
         selected_solution = sample[0]
         report(LogLevel.TRC, f"(Tournament) Solution selected: {str(selected_solution)}")
-        print("pop is" + f"{population}")
         return (selected_solution,)
 
 import types

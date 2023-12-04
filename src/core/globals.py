@@ -30,7 +30,7 @@ class LogLevel(enum.Enum):
         return NotImplemented
 
 # All messages at or below this log level are reported.
-LOG_LEVEL = LogLevel.TRC
+LOG_LEVEL = LogLevel.DBG
 
 def report(level: LogLevel, *str):
     """!Log a message
