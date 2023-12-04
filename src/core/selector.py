@@ -18,6 +18,8 @@ from core.evaluator import Evaluator
 
 T = typing.TypeVar("T", bound=Genome)
 
+
+
 class Selector(abc.ABC, typing.Generic[T]):
     """!An abstract selector
         A selector that can be applied as a parent selector or a survivor selector. 
@@ -29,13 +31,13 @@ class Selector(abc.ABC, typing.Generic[T]):
 
     def select_to_pool(self,
                        population: Population[T],
-                       evaluator: Evaluator[T],
                        budget: Optional[int] = None) -> GenomePool[T]:
         """!Select to tuples of parents
             Select to a GenomePool instance, which can be passed to the variator. The arity of the returned value depends on the arity of the selector.
             If the population cannot exactly fill tuples of a given size, discard the left-over genomes.
+            @postcondition: the returned population is descored
         """
-        selected = self.select_to_many(population, evaluator, budget)
+        selected = self.select_to_many(population, budget)
         
         # Tuple magic. Zipping an iterable with itself extracts a tuple of that size. The "discarding" behaviour is implemented this way.
         ai:Iterator[T] = iter(selected)
@@ -44,47 +46,54 @@ class Selector(abc.ABC, typing.Generic[T]):
 
         for x in output_tuples:
             pool.append(x)
-
         return pool
 
     def select_to_population(self,
                              population: Population[T],
-                             evaluator: Evaluator[T],
                              budget: Optional[int] = None) -> Population[T]:
         """!Select to a Population
             Select to a Population instance. This might happen, for example, while the selector is acting as a survivor selector.
+            @postcondition: the returned population is descored
         """
-        selected = self.select_to_many(population, evaluator, budget)
+        selected = self.select_to_many(population, budget)
         new_population = Population[T]()
         for x in selected:
             new_population.append(x)
-
         return new_population
     
-    def select_to_many(self, population: Population[T], evaluator: Evaluator[T], budget: Optional[int] = None) -> Iterable[T]:
+    def select_to_many(self, population: Population[T], budget: Optional[int] = None) -> Tuple[T, ...]:
         """!Many-to-many selection strategy.
             Repeatedly apply select() to create a collection of solutions
             @param popoulation: the input population
             @param evaluator: the evaluator that selects from the input population
             @param budget: the size of the returned collection.
         """
+        
         old_population: Population[T] = population
         return_list: List[T] = []
 
+        # ----- Budget -----
+        # If a budget is not given, use my default budget
         if budget is None:
             budget = self.budget
+        # The budget cannot exceed the population size
         budget = min(budget, len(old_population))
+
+        # Keep selecting until the budget runs out.
+        # The final selection might exceed the buedget. The selector must take care to not 
+        # cause weird stuff to happen.
         budget_used: int = 0
         while budget_used < budget:
-            return_list.append(self.select(old_population, evaluator))
-            budget_used = budget_used + 1
-
-        return return_list
+            selected_results = self.select(old_population)
+            # Remove results from the population
+            [population.draw(x) for x in selected_results]
+            return_list.append(*selected_results)
+            budget_used = budget_used + len(selected_results)
+        return tuple(return_list)
 
     @abc.abstractmethod
     def select(self, 
-               parents: Population[T],
-               evaluator: Evaluator[T]) -> T:
+               parents: Population[T]) -> Tuple[T, ...]:
         """!Many-to-one selection strategy
             Select, possibly stochastically, a solution from the population
             @param parents: the input population
@@ -94,70 +103,88 @@ class Selector(abc.ABC, typing.Generic[T]):
         pass
 
 
+
 class SimpleSelector(Selector[T]):
     def __init__(self: typing.Self, coarity:int, budget: int):
         super().__init__(coarity, budget)
 
     def select(self,
-               population: Population[T],
-               evaluator: Evaluator[T]) -> T:
+               population: Population[T])-> Tuple[T]:
         """!A one-to-one selection strategy.
             Select the solution with highest fitness.
         """
-        solutions = population
-        
-        best_score: Optional[float] = None
-        best_index: int
-        best_solution: T
-
-        for i in range(0, len(solutions)):
-            current_genome = solutions[i]
-            # If the genome is not scored, score it.
-            # At this point, evaluating a genome also scores it. This might be redundant.
-            if current_genome.score is None:
-                
-                current_genome_scpre = evaluator.evaluate(solutions[i])
-                current_genome.score = current_genome_scpre
-
-            if best_score is None or current_genome.score > best_score:
-                best_index, best_score, best_solution = (i, current_genome.score, solutions[i])
-
-        selected_solution = solutions.draw(best_index)
+        population.sort(lambda x : x.score)
+        selected_solution = population[0]
         report(LogLevel.TRC, f"Solution selected: {str(selected_solution)}")
-        return selected_solution
+        return (selected_solution,)
+            
     
 class ElitistSimpleSelector(SimpleSelector[T]):
     def __init__(self: typing.Self, coarity:int, budget: int):
         super().__init__(coarity, budget-1)
         self.best_genome: Optional[T] = None
 
-    def select_to_many(self, population: Population[T], evaluator: Evaluator[T], budget: Optional[int] = None) -> Iterable[T]:
+    def select_to_many(self, population: Population[T], budget: Optional[int] = None) -> Tuple[T, ...]:
         """!A many-to-many selection strategy.
             Preserve and update an elite, insert the elite to the resulted population.
         """
-
-        results: Iterable[T] = super().select_to_many(population, evaluator, budget)
+        results: Tuple[T, ...] = super().select_to_many(population, budget)
         best_genome: Optional[T] = self.best_genome
+        if best_genome is None:
+            best_genome = results[0]
+        for x in results:
+            if x.score < best_genome.score:
+                best_genome = x
+        self.best_genome = best_genome
 
-        for g in results:
-            if best_genome is None:                
-                best_genome = g.copy()
-                best_genome.score = g.score
-            elif best_genome.score is None:
-                raise Exception("Evaluator scoring heuristic failed, best_genome exists without a score.")
-            elif g.score is None:
-                raise Exception("Evaluator scoring heuristic failed, a solution is evaluated but unscored.")
-            elif best_genome.score < g.score:
-                report(LogLevel.INF, f"Elitism activated: score {best_genome.score} -> {g.score} by {g.score - best_genome.score}")
-                best_genome = g.copy()
-                best_genome.score = g.score
-                
+        return (*results, self.best_genome)
 
-        if best_genome is not None:
-            self.best_genome = best_genome
-            return [*results, best_genome]
-        else:
-            raise Exception("Mypi forces me to do this.")
+import random
+class TournamentSelector(Selector[T]):
+    def __init__(self: typing.Self, coarity:int, budget: int, bracket_size:int = 2):
+        super().__init__(coarity, budget)
+        self.bracket_size = bracket_size
+
+    def select(self,
+               population: Population[T])-> Tuple[T]:
+        """!A one-to-one selection strategy.
+            Select a uniform sample, then select the best member
+        """
+        
+        sample = random.sample(list(population), self.bracket_size)
+        sample.sort(key = lambda x : x.score, reverse=True)
+
+        selected_solution = sample[0]
+        report(LogLevel.TRC, f"(Tournament) Solution selected: {str(selected_solution)}")
+        print("pop is" + f"{population}")
+        return (selected_solution,)
+
+import types
+
+def Elitist(sel: Selector[T])-> Selector:
+
+    def select_to_many(self, population: Population[T], budget: Optional[int] = None) -> Tuple[T, ...]:
+        # Python magic. Since super() cannot be used in this context, directly call select_to_many in the parent.
+        
+        results: Tuple[T, ...] = self.__class__.__mro__[1].select_to_many(self, population, budget)
+        best_genome: Optional[T] = self.best_genome
+        if best_genome is None:
+            best_genome = results[0]
+        for x in results:
+            if x.score > best_genome.score:
+                best_genome = x
+        self.best_genome = best_genome
+        report(LogLevel.DBG, f"Elitism: best score is {self.best_genome.score}")
+        return (*results, self.best_genome)
+    
+    setattr(sel, 'best_genome', None)
+    setattr(sel, 'select_to_many', types.MethodType(select_to_many, sel))
+    return sel
+    
+    
+
+    
+
     
 # The idea of having a selector decorator is highly restrictive - if it cannot tap into the "inner working" of the selector,
 #   then it cannot do much beyond pre- and post-processing.

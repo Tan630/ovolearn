@@ -11,7 +11,9 @@ from core.population import Population
 from core.population import Genome
 from core.variator import Variator
 from core.controller import Controller
-from core.selector import ElitistSimpleSelector
+from core.selector import Elitist
+from core.selector import SimpleSelector
+from core.selector import TournamentSelector
 
 
 class IllegalVariation(Exception):
@@ -67,7 +69,6 @@ class Binary(Genome[T]):
     
     def copy(self) -> typing.Self:
         new_copy = self.__class__(self.length, self.value)
-        new_copy.score = self.score
         return new_copy
     
     __deepcopy__ = copy
@@ -89,8 +90,6 @@ class RandomBitMutator(Variator[Binary]):
     def vary(self, binaries: Tuple[Binary, ...]) -> Tuple[Binary, ...]:
         binary = binaries[0].copy()
         newbits = binaries[0].copy()
-        binary.score = None
-        newbits.score = None
         
         for i in range(0, len(binary)): # Somehow cannot properly implement the __len__ dunder 
             if (random.random()<0.001):
@@ -102,10 +101,10 @@ class RandomBitMutator(Variator[Binary]):
 init_pop = Population[Binary]()
 
 for i in range (0, 10):
-    init_pop.append(Binary.create_random(100))
+    init_pop.append(Binary.create_random(10))
 
 evaluator = BitDistanceEvaluator()
-selector = ElitistSimpleSelector[Binary](1, 10)
+selector = Elitist(TournamentSelector[Binary](1, 10))
 variator = RandomBitMutator()
 
 ctrl = Controller[Binary](

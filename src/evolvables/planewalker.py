@@ -55,7 +55,6 @@ class StepMutator(Variator[Position]):
 
         return (Position(destination1), Position(destination2))
         
-    
     @staticmethod
     def normalise(pos: Iterable[float]) -> List[float]:
         len = sum(a**2 for a in pos)
@@ -67,16 +66,6 @@ class StepMutator(Variator[Position]):
         """
         return [numpy.random.normal() for i in range(d)]
         
-
-
-# 3, 4
-
-
-
-
-
-
-
 
 
 

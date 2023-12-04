@@ -300,9 +300,6 @@ class ProgramCrossoverVariator(Variator[Program[T]]):
         root1: Program = parents[0].copy()
         root2: Program = parents[1].copy()
 
-        root1.score = None
-        root2.score = None
-
         expression_nodes_from_root_1 = root1.nodes()
         expression_nodes_from_root_2 = root2.nodes()
 

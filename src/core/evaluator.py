@@ -10,11 +10,9 @@ class Evaluator(abc.ABC, typing.Generic[T]):
     @staticmethod
     def evaluate_shortcut(func):
         """!Apply the "dynamic scoring" heuristic to the evaluate(.) method. 
-            @TODO The same heuristic is implemented by default in the selector. It is prone to cause problems.
         """
         def wrapper(*args, **kwargs) -> float:
             genome = args[1]
-            
             if (isinstance(genome, Genome) and genome.score is not None):
                 return genome.score
             else:
@@ -27,7 +25,7 @@ class Evaluator(abc.ABC, typing.Generic[T]):
     @abc.abstractmethod
     @evaluate_shortcut
     def evaluate(self: Self, s1: T)-> float:
-        """Evaluate an individual and return the score.
+        """!Evaluate an individual and return the score.
             Higher scores are better.
         """
         pass
@@ -39,14 +37,12 @@ class Evaluator(abc.ABC, typing.Generic[T]):
     #     """
     #     return False
 
-    def evaluate_population(self: Self, pop: Population[T])-> float:
-        """Return the score of a population.
-            Default implementation: evaluate the sum of the scores of individuals.
+    def evaluate_population(self: Self, pop: Population[T])-> Population[T]:
+        """!Score every individual of a population
         """
-        return_float = 0.
-        for solution in pop:
-            return_float = return_float + self.evaluate(solution)
-        return return_float
+        for x in pop:
+            x.score = self.evaluate(x)
+        return pop
     
     
 

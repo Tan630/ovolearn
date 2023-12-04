@@ -55,24 +55,32 @@ class Controller(typing.Generic[T]):
         self.generation = self.generation + 1
         
         # Apply the parent selector
-        pop_before_parent_selection = len(self.population)
-        parents = self.parent_selector.select_to_pool(self.population, self.evaluator)
+        initial_population = len(self.population)
+
+        # Evaluate the parent pool
+        self.evaluator.evaluate_population(self.population)
+        parents = self.parent_selector.select_to_pool(self.population)
         
         # Apply the child selector
-        pop_before_variation = len(parents) * len(parents[0])
+        pop_before_variation = sum(len(x) for x in parents)
         children = self.variator.vary_pool(parents)
         
         # Apply the survivor selector
         pop_before_survivor_selection = len(children)
-        survivors = self.survivor_selector.select_to_population(children, self.evaluator)
+        
+        self.evaluator.evaluate_population(children)
+        print ([x.score for x in children])
+        survivors = self.survivor_selector.select_to_population(children)
 
         # The survivor become the next population.
         pop_after_survivor_selection = len(survivors)
+        
         self.population = survivors
+        self.evaluator.evaluate_population(self.population)
         self.population.sort()
         
         # Accounting for error reporting purposes. 
-        report(LogLevel.DBG, f"Population progress: [{pop_before_parent_selection}]"
+        report(LogLevel.DBG, f"Population progress: [{initial_population}]"
                f" -> (...)>PAR>({self.parent_selector.coarity})"
                f" -> [({self.parent_selector.coarity})~{pop_before_variation}]"
                f" -> ({self.variator.arity}) VAR ({self.variator.coarity})"

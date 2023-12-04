@@ -3,6 +3,7 @@ from typing import TypeVar
 from typing import Iterator
 from typing import Iterable
 from typing import Tuple
+from typing import Callable
 from typing import Optional
 from typing import Self
 from typing import List
@@ -15,19 +16,42 @@ from abc import abstractmethod
 
 R = TypeVar('R')
 
+class NullScoreException(Exception):
+    pass
+
 class Genome(ABC, Generic[R]):
     """!A solution
         A genotypical representation of a solution that specifies the capabilities a solution must have in order to work with evolutionary operators.
     """
     def __init__(self) -> None:
         # The genome
-        self.score: Optional[float] = None
+        self._score: Optional[float] = None
+
+    @property
+    def score(self)-> float:
+        if (self._score is None):
+            raise NullScoreException("Score is accessed but null")
+        else:
+            return self._score
+
+    @score.setter
+    def score(self, value: float)-> None:
+        self._score = value
+
+    def descore(self)-> None:
+        self._score = None
+
+    def is_scored(self)-> bool:
+        return self.score is None
     
     @abstractmethod
     def copy(self) -> Self: ...
     """!Copy the solution.
         Copy the solution, so that changes made on the copy do not affect the original genome. The implementation decides if all components must be copied.
     """
+
+    def __eq__(self, other: object)-> bool:
+        return isinstance(other, self.__class__) and self.score == other.score
 
 
 T = TypeVar('T', bound=Genome)
@@ -69,12 +93,26 @@ class AbstractCollection(ABC, Generic[R]):
     def append(self, value: R) -> None:
         self._solutions.append(value)
 
-    def extend(self, value: Iterable[R]) -> None:
+    def extend(self, value: Iterable[R])-> None:
         self._solutions = list(itertools.chain(self._solutions, value))
 
-    def draw(self, key: int) -> R:
-        a : R = self[key]
-        del self[key]
+    def populate(self, new_data: Iterable[R])-> None:
+        self.solutions = list(new_data)
+
+    def draw(self, key: int | R) -> R:
+        if isinstance(key, int):
+            a : R = self[key]
+            del self[key]
+        else:
+            for i in range(len(self)):
+                # Development mark: delete the exception when I finish this
+                has_removed = False
+                if self[i] == key:
+                    has_removed = True
+                    del self[i]
+                    break
+                if not has_removed: raise Exception("the requested item is not in the list")
+            return key        
         return a
 
 # P = TypeVar('P', bound=Tuple[Genome, ...])
@@ -85,6 +123,11 @@ class GenomePool(AbstractCollection[Tuple[T, ...]]):
     def __init__(self, arity: int, *args: Tuple[T, ...]):
         super().__init__(*args)
         self.arity = arity
+
+    def descore(self)-> None:
+        for t in self._solutions:
+            for x in t:
+                x.descore()
 
 from core.globals import report
 from core.globals import LogLevel
@@ -98,8 +141,12 @@ class Population(AbstractCollection[T]):
     def copy(self) -> Self:
         return self.__class__(*[x.copy() for x in self._solutions])
     
-    def sort(self: Self):
-        self._solutions.sort(reverse=True, key=lambda x : x.score if x.score is not None else 0)
+    def sort(self: Self, ranker: Callable[[T], float] = lambda x : x.score)-> None:
+        self._solutions.sort(reverse=True, key=ranker)
+
+    def descore(self: Self)-> None:
+        for x in self._solutions:
+            x.descore()
         
     
 
