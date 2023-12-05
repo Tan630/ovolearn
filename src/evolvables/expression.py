@@ -374,66 +374,66 @@ class GymEvaluator(Evaluator[Program[float]]):
             score = score + step_result[1] #type: ignore
         return score
 
-# ########## Begin setup :) ########## #
+# # ########## Begin setup :) ########## #
 
-# Size of the population. Affects the size of the initial initial population, also enforced by selectors.
-pop_size = 30
+# # Size of the population. Affects the size of the initial initial population, also enforced by selectors.
+# pop_size = 30
 
-# Depth constraint of the expression tree
-tree_depth = 10
-# Node budget of the expression tree
-node_budget = 20
+# # Depth constraint of the expression tree
+# tree_depth = 10
+# # Node budget of the expression tree
+# node_budget = 20
 
-# The number of episodes for each evaluation. The actual score should be the mean of these scores.
-# The length of each episode is hard-coded to be 10 (see `evaluate_step`)
-step_bound = 25
-episode_bound = 25
+# # The number of episodes for each evaluation. The actual score should be the mean of these scores.
+# # The length of each episode is hard-coded to be 10 (see `evaluate_step`)
+# step_bound = 25
+# episode_bound = 25
 
 
-# Build the population of ternary programs. The arity (4) should match the size of the observation space (4 for cartpole)
-progf = ProgramFactory((add, sub, mul, div, sin, cos, mul, div, lim, avg), 4)
+# # Build the population of ternary programs. The arity (4) should match the size of the observation space (4 for cartpole)
+# progf = ProgramFactory((add, sub, mul, div, sin, cos, mul, div, lim, avg), 4)
 
-# Declare and populate the population
-pops: Population[Program[float]] = Population()
-for i in range(0, pop_size):
-    pops.append(progf.build(tree_depth, node_budget))
+# # Declare and populate the population
+# pops: Population[Program[float]] = Population()
+# for i in range(0, pop_size):
+#     pops.append(progf.build(tree_depth, node_budget))
 
-# Prepare the variator
-variator = ProgramCrossoverVariator[Program[float]](arity = 2, coarity = 3)
+# # Prepare the variator
+# variator = ProgramCrossoverVariator[Program[float]](arity = 2, coarity = 3)
 
-# The evaluaor is ready. Feed the custom wrapper and the environment to GymEvaluator
-def pendulum_wrapper(f: float):
-    return [round(max(min(2, f), -2))]
+# # The evaluaor is ready. Feed the custom wrapper and the environment to GymEvaluator
+# def pendulum_wrapper(f: float):
+#     return [round(max(min(2, f), -2))]
 
-def cartpole_wrapper(f: float) -> int:
-    return round(max(min(1, f), 0))
+# def cartpole_wrapper(f: float) -> int:
+#     return round(max(min(1, f), 0))
 
-eval = gym.make('CartPole-v1')
-evaluator = GymEvaluator(eval, cartpole_wrapper, step_bound, episode_bound, score_wrapper = lambda x : -x)
+# eval = gym.make('CartPole-v1')
+# evaluator = GymEvaluator(eval, cartpole_wrapper, step_bound, episode_bound, score_wrapper = lambda x : -x)
 
-# Prepare the selector.
-import gymnasium as gym
-selc = ElitistSimpleSelector[Program[float]](coarity = 2, budget = pop_size)
-selp = ElitistSimpleSelector[Program[float]](coarity = 2, budget = pop_size)
+# # Prepare the selector.
+# import gymnasium as gym
+# selc = ElitistSimpleSelector[Program[float]](coarity = 2, budget = pop_size)
+# selp = ElitistSimpleSelector[Program[float]](coarity = 2, budget = pop_size)
 
-ctrl = Controller[Program[float]](
-    population = pops,
-    evaluator = evaluator,
-    parent_selector = selc,
-    variator = variator,
-    survivor_selector = selp
-)
+# ctrl = Controller[Program[float]](
+#     population = pops,
+#     evaluator = evaluator,
+#     parent_selector = selc,
+#     variator = variator,
+#     survivor_selector = selp
+# )
 
-best_solutions: List[Program] = []
-best_scores: List[Program] = []
+# best_solutions: List[Program] = []
+# best_scores: List[Program] = []
 
-def score_keeper(best_scores, best_solutions, c: Controller[Program[T]]):
-    best_solutions = best_solutions.append(c.population[0])
-    best_scores = best_scores.append(c.population[0].score)
+# def score_keeper(best_scores, best_solutions, c: Controller[Program[T]]):
+#     best_solutions = best_solutions.append(c.population[0])
+#     best_scores = best_scores.append(c.population[0].score)
 
-from functools import partial
-for i in range(0, 20):
-    ctrl.step(partial(score_keeper, best_scores, best_solutions))
+# from functools import partial
+# for i in range(0, 20):
+#     ctrl.step(partial(score_keeper, best_scores, best_solutions))
 
 
 # print ([str(x) for x in best_solutions])
