@@ -94,7 +94,9 @@ class Controller(typing.Generic[T]):
             report(LogLevel.WRN, f"Score inconsistent: cached {self.population[0].score}, actual {empirical_best_score}")
 
         if (pop_before_variation / self.variator.arity * self.variator.coarity != pop_before_survivor_selection):
-            report(LogLevel.WRN, f"Variator arity inconsistent with population growth. {int(pop_before_variation / self.variator.arity * self.variator.coarity)} <> {pop_before_survivor_selection}")
+            report(LogLevel.WRN, f"Variator arity inconsistent with population growth. "
+                f"{pop_before_variation} / {self.variator.arity} * {self.variator.coarity} "
+                f"= {int(pop_before_variation / self.variator.arity * self.variator.coarity)} <> {pop_before_survivor_selection}")
 
         if (accountant is not None):
             accountant(self)
@@ -124,7 +126,3 @@ class Controller(typing.Generic[T]):
     @max_steps.setter
     def max_steps(self, val: int) -> None:
         self._max_steps = val
-
-
-
-

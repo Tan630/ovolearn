@@ -102,6 +102,12 @@ class Selector(abc.ABC, typing.Generic[T]):
         """
         pass
 
+class NullSelector(Selector[T]):
+    def __init__(self: typing.Self, coarity:int, budget: int):
+        super().__init__(coarity, budget)
+
+    def select_to_many(self, population: Population[T], budget: Optional[int] = None) -> Tuple[T, ...]:
+        return tuple(x for x in population)
 
 
 class SimpleSelector(Selector[T]):
@@ -141,23 +147,36 @@ class ElitistSimpleSelector(SimpleSelector[T]):
 
 import random
 class TournamentSelector(Selector[T]):
-    def __init__(self: typing.Self, coarity:int, budget: int, bracket_size:int = 2):
+    def __init__(self: typing.Self, coarity:int, budget: int, bracket_size:int = 2, probability:float = 1):
         super().__init__(coarity, budget)
-        self.bracket_size = bracket_size
+        self.bracket_size: int = bracket_size
+        self.probability: float = min(2, max(probability, 0))
 
     def select(self,
                population: Population[T])-> Tuple[T]:
         """!A one-to-one selection strategy.
             Select a uniform sample, then select the best member
         """
+        # Do not select if
+        #   (a) the sample is less than bracket_size, or
+        #   (b) the budget is less than bracket_size
         sample: List[T]
-        if len(population) >= self.bracket_size:
-            sample = random.sample(tuple(population), self.bracket_size)
-        else:
+        if min(len(population), self.budget) < self.bracket_size:
             sample = list(population)
+        else:
+            sample = random.sample(tuple(population), self.bracket_size)
         sample.sort(key = lambda x : x.score, reverse=True)
+        
+        # If nothing is selected stochastically, select the last element
+        selected_solution: T = sample[-1]
 
-        selected_solution = sample[0]
+        # Select the ith element with probability p * (1-p)**i
+        probability = self.probability
+        for i in range(len(sample)):
+            if random.random() < probability * (1 - probability)**i:
+                selected_solution = sample[i]
+                break
+        
         report(LogLevel.TRC, f"(Tournament) Solution selected: {str(selected_solution)}")
         return (selected_solution,)
 

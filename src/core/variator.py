@@ -4,6 +4,7 @@ import typing
 import time
 from typing import Optional
 from typing import Self
+from core.globals import report, LogLevel
 from core.population import Population
 from core.population import Genome
 from core.population import Tuple
@@ -15,10 +16,9 @@ class ArityException(Exception):
     pass
 
 class Variator(abc.ABC, typing.Generic[T]):
-    def __init__(self, arity, coarity, checked) -> None:
+    def __init__(self, arity, coarity) -> None:
         self.arity = arity
         self.coarity = coarity
-        self.checked = checked
 
     @abc.abstractmethod
     def vary(self, parents: Tuple[T, ...]) -> Tuple[T, ...]:
@@ -39,11 +39,10 @@ class Variator(abc.ABC, typing.Generic[T]):
         empiricalparent_pool_arity = len(pool[0])
         my_arity = len(pool[0])
         
-        if self.checked:
-            if (parent_pool_arity != empiricalparent_pool_arity):
-                raise ArityException(f"Parent pool arity inconsistent with empirical arity. ({parent_pool_arity}) <> ({empiricalparent_pool_arity})")
-            if (my_arity != empiricalparent_pool_arity):
-                raise ArityException(f"Selector arity inconsistent with empirical arity. ({my_arity}) <> ({empiricalparent_pool_arity})")
+        if (parent_pool_arity != empiricalparent_pool_arity):
+            report(LogLevel.WRN, f"Parent pool arity inconsistent with empirical arity. ({parent_pool_arity}) <> ({empiricalparent_pool_arity})")
+        if (my_arity != empiricalparent_pool_arity):
+            report(LogLevel.WRN, f"Selector arity inconsistent with empirical arity. ({my_arity}) <> ({empiricalparent_pool_arity})")
         
         new_population = Population[T]()
         for pair in pool:

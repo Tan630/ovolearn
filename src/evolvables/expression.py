@@ -399,7 +399,7 @@ for i in range(0, pop_size):
     pops.append(progf.build(tree_depth, node_budget))
 
 # Prepare the variator
-variator = ProgramCrossoverVariator[Program[float]](arity = 2, coarity = 3, checked = True)
+variator = ProgramCrossoverVariator[Program[float]](arity = 2, coarity = 3)
 
 # The evaluaor is ready. Feed the custom wrapper and the environment to GymEvaluator
 def pendulum_wrapper(f: float):
