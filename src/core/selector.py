@@ -201,10 +201,6 @@ def Elitist(sel: Selector[T])-> Selector:
     setattr(sel, 'best_genome', None)
     setattr(sel, 'select_to_many', types.MethodType(select_to_many, sel))
     return sel
-    
-    
-
-    
 
     
 # The idea of having a selector decorator is highly restrictive - if it cannot tap into the "inner working" of the selector,

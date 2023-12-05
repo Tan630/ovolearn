@@ -30,7 +30,9 @@ class Position(Genome[float]):
         self.pos = pos
     
     def copy(self) -> Self:
-        return self.__class__(self.pos)
+        result = self.__class__(self.pos)
+        result.score = self.score
+        return result
     
     @classmethod
     def create_random(cls, bounds: Tuple[Tuple[float, float], ...])-> Self:
@@ -51,16 +53,42 @@ class FunctionEvaluator(Evaluator[Position]):
         return -self.function(*s1.pos)
 
 class StepMutator(Variator[Position]):
-    def __init__ (self, neighbour_count):
+    def __init__ (self, neighbour_count, step:float = 1):
         super().__init__(1, neighbour_count)
+        self.step = step
 
-    def vary(self, parents: Tuple[Position, ...], step:float = 1) -> Tuple[Position, ...]:
+    def vary(self, parents: Tuple[Position, ...]) -> Tuple[Position, ...]:
         results : list[Position] = []
         
         for i in range(self.coarity):
             direction1 = StepMutator.normalise(
                 StepMutator.random_vector(len(parents[0])))
-            results.append(Position(tuple(x * step for x in direction1)))
+            results.append(Position(tuple(x * self.step for x in direction1)))
+        return (tuple(results))
+        
+    @staticmethod
+    def normalise(pos: Iterable[float]) -> List[float]:
+        len = sum(a**2 for a in pos)
+        return [a / len for a in pos]
+    
+    @staticmethod
+    def random_vector(d: int) -> List[float]:
+        """Implementation fault: only returns an 2D vector.
+        """
+        return [numpy.random.normal() for i in range(d)]
+
+class FunctionalStepMutator(Variator[Position]):
+    def __init__ (self, neighbour_count, func:Callable[[Position], float]):
+        super().__init__(1, neighbour_count)
+        self.func = func
+
+    def vary(self, parents: Tuple[Position, ...]) -> Tuple[Position, ...]:
+        results : list[Position] = []
+        
+        for i in range(self.coarity):
+            direction1 = StepMutator.normalise(
+                StepMutator.random_vector(len(parents[0])))
+            results.append(Position(tuple(x * self.func(parents[0]) for x in direction1)))
         return (tuple(results))
         
     @staticmethod
