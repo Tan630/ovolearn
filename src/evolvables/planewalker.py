@@ -78,7 +78,7 @@ class StepMutator(Variator[Position]):
         return [numpy.random.normal() for i in range(d)]
 
 class FunctionalStepMutator(Variator[Position]):
-    def __init__ (self, neighbour_count, func:Callable[[Position], float]):
+    def __init__ (self, neighbour_count, func:Callable[[float], float]):
         super().__init__(1, neighbour_count)
         self.func = func
 
@@ -88,7 +88,7 @@ class FunctionalStepMutator(Variator[Position]):
         for i in range(self.coarity):
             direction1 = StepMutator.normalise(
                 StepMutator.random_vector(len(parents[0])))
-            results.append(Position(tuple(x * self.func(parents[0]) for x in direction1)))
+            results.append(Position(tuple(x * self.func(parents[0].score) for x in direction1)))
         return (tuple(results))
         
     @staticmethod

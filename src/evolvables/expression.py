@@ -2,6 +2,7 @@ from __future__ import annotations
 import abc
 import typing
 import math
+import functools
 
 from typing import Optional
 from typing import Tuple
@@ -25,6 +26,7 @@ from core.evaluator import Evaluator
 from core.controller import Controller
 from core.population import Population
 from core.population import Genome
+
 
 import random
 
@@ -79,15 +81,19 @@ class Expression(abc.ABC, typing.Generic[T]):
         return [self] + list(self.children)
     
     def __str__(self) -> str:
-        children_names : str = ''
-        for c in self.children:
-            children_names = children_names +" "+ str(c)
-        my_name: str = ""
-        if callable(self._function):
-            my_name = self._function.__name__
+        delimiter = ", "
+
+        my_name: str = self._function.__name__ if callable(self._function) else str(self._function)
+
+        children_name: str
+        if len(self.children) < 1:
+            children_name = ""
         else:
-            my_name = str(self._function)
-        return (f"{str(my_name)} ({children_names})")
+            children_name = f"({functools.reduce(lambda x, y: str(x) + ", " + str(y), [str(x) for x in self.children])})"
+        
+        
+        return (f"{my_name}{children_name}")
+    
 
     __copy__ = copy
     __deepcopy__ = copy
@@ -110,16 +116,16 @@ class ExpressionFactory(typing.Generic[T]):
         self.depth = 0
         self.budget_used = 0
 
-    def build(self, depth: int, budget: int) -> Expression:
+    def build(self, depth: int, budget: int, nullary_ratio: Optional[float] = None) -> Expression:
         self.budget_cap = budget
         self.budget_used = 0
 
-        target_function = self.poll_function()
+        target_function = self.poll_function(nullary_ratio)
         arity = get_arity(target_function)
 
         children : List [Expression]= []
         for i in range(0, arity):
-            children.append(self._build_recurse(depth-1))
+            children.append(self._build_recurse(depth-1, nullary_ratio))
 
         root = Expression(target_function, *children)
         if (self.budget_used < self.budget_cap):
@@ -129,16 +135,18 @@ class ExpressionFactory(typing.Generic[T]):
         return root
         
 
-    def _build_recurse(self, depth_left: int) -> Expression:
+    def _build_recurse(self, depth_left: int, nullary_ratio: Optional[float] = None) -> Expression:
         if (depth_left < 1 or self.over_budget()):
             target_function = self.poll_arity(0)
             return Expression(target_function)
         else:
-            target_function = self.poll_function()
+            
+            target_function = self.poll_function(nullary_ratio)
             arity = get_arity(target_function)
             children : List [Expression]= []
             for i in range(0, arity):
-                children.append(self._build_recurse(depth_left-1))
+                children.append(self._build_recurse(depth_left-1, nullary_ratio))
+            random.shuffle (children)
             base = Expression[T](target_function, *children)
             return base
 
@@ -149,9 +157,22 @@ class ExpressionFactory(typing.Generic[T]):
         self.budget_used = self.budget_used + 1
         # report(LogLevel.TRC, f"budget used: {self.budget_used - 1} -> {self.budget_used}")
     
-    def poll_function(self) -> Callable[..., T]:
+    def poll_function(self, nullary_ratio:Optional[float] = None) -> Callable[..., T]:
         self.cost_budget()
-        return choice(choice(self.function_pool))
+        choice_poll: List[Callable[..., T]]
+        if (nullary_ratio is None):
+            choice_poll = choice(list(self.function_pool.values()))
+        else:
+            if (random.random() < nullary_ratio):
+                choice_poll = self.function_pool[0]
+            else:
+                choice_poll = choice([self.function_pool[x] for x in self.function_pool.keys() if x != 0])
+                
+                
+            
+        choice_function: Callable[..., T] = choice(choice_poll)
+
+        return choice_function
 
     def poll_arity(self, arity: int) -> Callable[..., T]:
         return choice(self.function_pool[arity])
@@ -213,8 +234,8 @@ class ProgramFactory(Generic[T]):
     def next_symbol(self) -> Symbol[T]:
         return Symbol("sym_" + self.next_symbol_name())
     
-    def build(self, depth: int, budget: int) -> Program:
-        return Program(self.exprfactory.build(depth, budget), self.symbol_deposit, self)
+    def build(self, depth: int, budget: int, unary_weight: Optional[float] = None) -> Program:
+        return Program(self.exprfactory.build(depth, budget, unary_weight), self.symbol_deposit, self)
     
     
     
@@ -243,6 +264,9 @@ class Program(Genome[T]):
             raise ProgramArityMismatchError(len(self.symbols), len(args))
         self.__class__._assign_values(self.symbols, args)
         return self.expr.evaluate()
+    
+    def __call__(self, *args: T) -> T:
+        return self.evaluate(*args)
 
     @staticmethod
     def _assign_values(symbols: List[Symbol[T]], values: Tuple[T, ...]) -> None:
@@ -295,7 +319,6 @@ class ProgramCrossoverVariator(Variator[Program[T]]):
     def vary(self, parents: Tuple[Program[T], ...]) -> Tuple[Program[T], ...]:
         return (self.crossover(parents) + self.mutate(parents))
 
-
     def crossover(self, parents: Tuple[Program[T], ...]) -> Tuple[Program[T], ...]:
         root1: Program = parents[0].copy()
         root2: Program = parents[1].copy()
@@ -312,7 +335,7 @@ class ProgramCrossoverVariator(Variator[Program[T]]):
             expression_node_from_root_1_to_swap = random.choice(expression_internal_nodes_from_root_1)
             expression_node_from_root_2_to_swap = random.choice(expression_internal_nodes_from_root_2)
             self.__class__.swap_children(expression_node_from_root_1_to_swap, expression_node_from_root_2_to_swap)
-
+        print (str(root1) + "-----" + str(root2))
         return (root1, root2)
     
     def mutate(self, parents: Tuple[Program[T], ...]) -> Tuple[Program[T], ...]:
@@ -377,10 +400,10 @@ class GymEvaluator(Evaluator[Program[float]]):
 # # ########## Begin setup :) ########## #
 
 # # Size of the population. Affects the size of the initial initial population, also enforced by selectors.
-# pop_size = 30
+# pop_size = 100
 
 # # Depth constraint of the expression tree
-# tree_depth = 10
+# tree_depth = 5
 # # Node budget of the expression tree
 # node_budget = 20
 
@@ -437,7 +460,4 @@ class GymEvaluator(Evaluator[Program[float]]):
 
 
 # print ([str(x) for x in best_solutions])
-#print (str(best_scores))
-
-
- 
+# print (str(best_scores))
