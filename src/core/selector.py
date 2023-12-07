@@ -194,6 +194,8 @@ def Elitist(sel: Selector[T])-> Selector:
         for x in results:
             if x.score > best_genome.score:
                 best_genome = x
+
+        
         self.best_genome = best_genome
         report(LogLevel.DBG, f"Elitism: best score is {self.best_genome.score}")
         return (*results, self.best_genome)

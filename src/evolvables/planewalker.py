@@ -85,10 +85,19 @@ class FunctionalStepMutator(Variator[Position]):
     def vary(self, parents: Tuple[Position, ...]) -> Tuple[Position, ...]:
         results : list[Position] = []
         
+        
+        step_size = self.func(parents[0].score)
+        parent:Position = parents[0]
+        parent_pos:tuple[float, ...] = parent.pos
+
+        
         for i in range(self.coarity):
-            direction1 = StepMutator.normalise(
-                StepMutator.random_vector(len(parents[0])))
-            results.append(Position(tuple(x * self.func(parents[0].score) for x in direction1)))
+            direction = StepMutator.normalise(StepMutator.random_vector(len(parents[0])))
+            direction_scaled = [x * step_size for x in direction]
+            
+            new_point:tuple[float, ...] = tuple(sum(x) for x in zip(direction_scaled, parent_pos))
+                
+            results.append(Position(new_point))
         return (tuple(results))
         
     @staticmethod
@@ -101,3 +110,5 @@ class FunctionalStepMutator(Variator[Position]):
         """Implementation fault: only returns an 2D vector.
         """
         return [numpy.random.normal() for i in range(d)]
+
+

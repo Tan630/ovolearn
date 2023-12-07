@@ -85,7 +85,7 @@ class BitDistanceEvaluator(Evaluator[Binary]):
 
 class RandomBitMutator(Variator[Binary]):
     def __init__ (self):
-        super().__init__(1, 2, False)
+        super().__init__(1, 2)
 
     def vary(self, binaries: Tuple[Binary, ...]) -> Tuple[Binary, ...]:
         binary = binaries[0].copy()
@@ -104,15 +104,16 @@ for i in range (0, 10):
     init_pop.append(Binary.create_random(10))
 
 evaluator = BitDistanceEvaluator()
-selector = Elitist(TournamentSelector[Binary](1, 10))
+pselector = Elitist(SimpleSelector[Binary](1, 10))
+cselector = Elitist(SimpleSelector[Binary](1, 10))
 variator = RandomBitMutator()
 
 ctrl = Controller[Binary](
     population = init_pop,
     evaluator = evaluator,
     variator = variator,
-    survivor_selector = selector,
-    parent_selector = selector
+    survivor_selector = pselector,
+    parent_selector = cselector
 )
 
 dicts : typing.Dict[int, Optional[float]]= {}
