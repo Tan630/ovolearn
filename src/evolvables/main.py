@@ -87,9 +87,9 @@ class RandomBitMutator(Variator[Binary]):
     def __init__ (self):
         super().__init__(1, 2)
 
-    def vary(self, binaries: Tuple[Binary, ...]) -> Tuple[Binary, ...]:
-        binary = binaries[0].copy()
-        newbits = binaries[0].copy()
+    def vary(self, parents: Tuple[Binary, ...], **kwargs) -> Tuple[Binary, ...]:
+        binary = parents[0].copy()
+        newbits = parents[0].copy()
         
         for i in range(0, len(binary)): # Somehow cannot properly implement the __len__ dunder 
             if (random.random()<0.001):

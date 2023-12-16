@@ -113,7 +113,7 @@ class AbstractCollection(ABC, Generic[R]):
                 raise Exception("the requested item is not in the list")     
             else:
                 return key
-            
+from math import inf
 
 
 # P = TypeVar('P', bound=Tuple[Genome, ...])
@@ -129,6 +129,14 @@ class GenomePool(AbstractCollection[Tuple[T, ...]]):
         for t in self._solutions:
             for x in t:
                 x.descore()
+
+    def get_best_score(self)-> float:
+        best_score = -inf
+        for t in self:
+            for tt in t:
+                if tt.score > best_score:
+                    best_score = tt.score
+        return best_score
 
 from core.globals import report
 from core.globals import LogLevel

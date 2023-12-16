@@ -4,7 +4,7 @@ from core.population import Population
 from core.selector import SimpleSelector, Elitist
 from core.controller import Controller
 from typing import Callable
-from evolvables.functionalwalker import WalkerEvaluator
+from evolvables.planewalker import WalkerEvaluator
 import math
 def add(x, y):
     return x+y
@@ -69,9 +69,6 @@ def himmelblau(x:float, y:float)-> float:
 
 
 
-
-
-
 # ########## Begin setup :) ########## #
 
 # Size of the population. Affects the size of the initial initial population, also enforced by selectors.
@@ -79,10 +76,10 @@ pop_size = 100
 tree_depth = 3
 node_budget = 10
 episode_bound = 1
-step_bound = 100
+step_bound = 50
 
 sub_episode_bound = 1
-sub_step_bound = 100
+sub_step_bound = 50
 
 
 progf = ProgramFactory((add, sub, mul, div, log, lim, avg, val1, val2, val3, val05), 1)
@@ -91,7 +88,7 @@ pops: Population[Program[float]] = Population()
 for i in range(0, pop_size):
     pops.append(progf.build(tree_depth, node_budget))
 
-variator = ProgramCrossoverVariator[Program[float]](arity = 2, coarity = 3)
+variator = ProgramCrossoverVariator(arity = 2, coarity = 3)
 
 evaluator = WalkerEvaluator(himmelblau, sub_episode_bound, sub_step_bound)
 
@@ -122,5 +119,3 @@ for i in range(0, 20):
 
 print ([str(x) for x in best_solutions])
 print (str(best_scores))
-
-

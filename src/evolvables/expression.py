@@ -313,13 +313,11 @@ def avg (x:float, y:float):
 def lim(x: float, max_val:float, min_val:float) -> float:
     return max(min(max_val, x), min_val)
 
-
-
-class ProgramCrossoverVariator(Variator[Program[T]]):
-    def vary(self, parents: Tuple[Program[T], ...]) -> Tuple[Program[T], ...]:
+class ProgramCrossoverVariator(Variator[Program[float]]):
+    def vary(self, parents: Tuple[Program[float], ...]) -> Tuple[Program[float], ...]:
         return (self.crossover(parents) + self.mutate(parents))
 
-    def crossover(self, parents: Tuple[Program[T], ...]) -> Tuple[Program[T], ...]:
+    def crossover(self, parents: Tuple[Program[float], ...]) -> Tuple[Program[float], ...]:
         root1: Program = parents[0].copy()
         root2: Program = parents[1].copy()
 
@@ -338,13 +336,13 @@ class ProgramCrossoverVariator(Variator[Program[T]]):
         print (str(root1) + "-----" + str(root2))
         return (root1, root2)
     
-    def mutate(self, parents: Tuple[Program[T], ...]) -> Tuple[Program[T], ...]:
+    def mutate(self, parents: Tuple[Program[float], ...]) -> Tuple[Program[float], ...]:
         root: Program = parents[0].copy()
         root.expr._function = self.__class__._draw_replacement_function(root)
         return (tuple([root]))
 
     @staticmethod
-    def swap_children(expr1: Expression[T], expr2: Expression[T]) -> None:
+    def swap_children(expr1: Expression[float], expr2: Expression[float]) -> None:
         child_nodes = list(expr1.children + expr2.children)
         random.shuffle(child_nodes)
 

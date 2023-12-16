@@ -43,12 +43,19 @@ class Controller(typing.Generic[T]):
         self.survivor_selector = survivor_selector
         self.is_done = False
         self.generation = 0
+        # ad-hoc magic
+        self.best: float = None
+        self.p_best: float = None
+        self.p_p_best: float = None
+        
+
 
     def step(self, accountant: Optional[Callable[[Self], None]]= None) -> Self:
         """!Improve the population by one generation.
             @param accountant:  act on the population after the survivor selector
             @return: the population that results from the step
         """
+        
         
         if (self.done()):
             return self
@@ -59,11 +66,19 @@ class Controller(typing.Generic[T]):
 
         # Evaluate the parent pool
         self.evaluator.evaluate_population(self.population)
+        best_score = max(tuple(x.score for x in self.population))
         parents = self.parent_selector.select_to_pool(self.population)
+        
+        
+
+        self.p_p_best = best_score if self.p_best is None else self.p_best
+        self.p_best = best_score if self.best is None else best_score
+        self.best = best_score
+        
         
         # Apply the child selector
         pop_before_variation = sum(len(x) for x in parents)
-        children = self.variator.vary_pool(parents)
+        children = self.variator.vary_pool(parents, None, self.p_best, self.p_p_best)
         
         # Apply the survivor selector
         pop_before_survivor_selection = len(children)

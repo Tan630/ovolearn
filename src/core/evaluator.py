@@ -1,5 +1,5 @@
 import typing
-from typing import Self
+from typing import Self, Callable
 import abc
 from core.population import Population
 from core.population import Genome

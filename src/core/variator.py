@@ -4,6 +4,7 @@ import typing
 import time
 from typing import Optional
 from typing import Self
+from typing import Callable
 from core.globals import report, LogLevel
 from core.population import Population
 from core.population import Genome
@@ -16,7 +17,7 @@ class ArityException(Exception):
     pass
 
 class Variator(abc.ABC, typing.Generic[T]):
-    def __init__(self, arity, coarity) -> None:
+    def __init__(self, arity: int, coarity: int) -> None:
         self.arity = arity
         self.coarity = coarity
 
@@ -29,7 +30,8 @@ class Variator(abc.ABC, typing.Generic[T]):
         """
         pass
 
-    def vary_pool(self, pool: GenomePool[T], rate: typing.Any = None) -> Population[T] :
+        # magic remove the Nones
+    def vary_pool(self, pool: GenomePool[T], rate: typing.Any = None, a=None, b=None) -> Population[T] :
         """!Apply the variator to a pool of tuples of parents.
             Also applies the "dynamic scoring" heuristic: the score of a genome is assigned to it as a field.
             Inspecting this field instead of evaluating the solution may save cost.
