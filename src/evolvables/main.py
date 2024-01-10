@@ -16,6 +16,7 @@ from core.selector import SimpleSelector
 from core.selector import TournamentSelector
 
 
+
 class IllegalVariation(Exception):
     def __init__(self):
         super().__init__("Given index out of bound!")
